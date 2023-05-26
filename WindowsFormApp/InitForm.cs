@@ -62,7 +62,6 @@ namespace WIndowsFormApp
 
         private void OpenMainForm()
         {
-            this.Hide();
             Form mainForm = new MainForm();
             mainForm.Show();         
         }
@@ -75,7 +74,7 @@ namespace WIndowsFormApp
         private void SaveLanguageAndGender()
         {
             List<string> lines = new ();
-            lines.Add($"{cbLanguage.SelectedItem.ToString()}{SEPARATOR}{cbGender.SelectedItem.ToString()}");
+            lines.Add($"{cbLanguage.SelectedItem}{SEPARATOR}{cbGender.SelectedItem}");
 
             try
             {

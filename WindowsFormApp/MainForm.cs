@@ -22,18 +22,17 @@ namespace WindowsFormApp
             InitializeComponent();
         }
 
-        private async void MainForm_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
-            await LoadFemaleTeams();
-            await LoadMaleTeams();
+            LoadFemaleTeams();
+            LoadMaleTeams();
         }
 
-        private static async Task LoadFemaleTeams()
+        private static void LoadFemaleTeams()
         {
             try
             {
                 List<Team> femaleTeams = repo.GetFemaleTeams();
-                MessageBox.Show("Loaded succesfuly");
             }
             catch (Exception)
             {
@@ -45,12 +44,12 @@ namespace WindowsFormApp
             }
         }
 
-        private static async Task LoadMaleTeams()
+        private static void LoadMaleTeams()
         {
             try
             {
                 List<Team> maleTeams = repo.GetMaleTeams();
-                
+
             }
             catch (Exception)
             {
