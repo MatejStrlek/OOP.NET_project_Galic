@@ -13,43 +13,25 @@ using WIndowsFormApp;
 
 namespace WindowsFormApp
 {
-    public partial class MainForm : Form
+    public partial class MaleForm : Form
     {
         public static readonly IRepository repo = RepositoryFactory.GetRepository();
 
-        public MainForm()
+        public MaleForm()
         {
             InitializeComponent();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            LoadFemaleTeams();
-            LoadMaleTeams();
-        }
-
-        private static void LoadFemaleTeams()
-        {
-            try
-            {
-                List<Team> femaleTeams = repo.GetFemaleTeams();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(
-                    "Error while loading API endpoint!",
-                    "API Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-        }
-
-        private static void LoadMaleTeams()
+        private void MaleForm_Load(object sender, EventArgs e)
         {
             try
             {
                 List<Team> maleTeams = repo.GetMaleTeams();
-
+                MessageBox.Show("loaded male");
+                maleTeams.ForEach(team =>
+                {
+                    cbFavoriteMaleTeam.Items.Add(team.ToString());
+                });
             }
             catch (Exception)
             {

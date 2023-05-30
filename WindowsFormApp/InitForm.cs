@@ -48,23 +48,7 @@ namespace WIndowsFormApp
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        private void btnLanguage_Click(object sender, EventArgs e)
-        {
-            OpenMainForm();
         }      
-
-        private void btnGender_Click(object sender, EventArgs e)
-        {
-            OpenMainForm();           
-        }
-
-        private void OpenMainForm()
-        {
-            Form mainForm = new MainForm();
-            mainForm.Show();         
-        }
 
         private void InitForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -73,7 +57,7 @@ namespace WIndowsFormApp
 
         private void SaveLanguageAndGender()
         {
-            List<string> lines = new ();
+            List<string> lines = new();
             lines.Add($"{cbLanguage.SelectedItem}{SEPARATOR}{cbGender.SelectedItem}");
 
             try
@@ -85,6 +69,33 @@ namespace WIndowsFormApp
                 MessageBox.Show(ex.Message);
             }
         }
-        
+
+        private void btnOpenApp_Click(object sender, EventArgs e)
+        {
+            if (cbGender.SelectedIndex == 0) //male
+            {
+                OpenMaleForm();
+            }
+            else if (cbGender.SelectedIndex == 1) 
+            {
+                OpenFemaleForm();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void OpenFemaleForm()
+        {
+            Form femaleForm = new FemaleForm();
+            femaleForm.Show();
+        }
+
+        private void OpenMaleForm()
+        {
+            Form maleForm = new MaleForm();
+            maleForm.Show();
+        }
     }
 }
