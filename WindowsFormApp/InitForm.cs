@@ -1,16 +1,19 @@
 using DAL.DAO;
+using DAL.Repository;
 using WindowsFormApp;
 
 namespace WIndowsFormApp
 {
     public partial class InitForm : Form
     {
+        public static readonly IRepository repo = RepositoryFactory.GetRepository();
         private const string PATH = "language_and_gender.txt";
         private const char SEPARATOR = ';';
 
         public InitForm()
         {
             InitializeComponent();
+            MaximizeBox = false;
         }
 
         private void InitForm_Load(object sender, EventArgs e)
@@ -18,19 +21,14 @@ namespace WIndowsFormApp
             cbLanguage.SelectedIndex = 0;
             cbGender.SelectedIndex = 0;
 
-            LoadLanguageAndGender();
+            LoadLanguageAndGenderHere();
         }
 
-        private void LoadLanguageAndGender()
+        private void LoadLanguageAndGenderHere()
         {
-            if (!File.Exists(PATH))
-            {
-                File.Create(PATH);
-            }
-
             try
             {
-                string[] lines = File.ReadAllLines(PATH);
+                string[] lines = repo.LoadLanguageAndGender(PATH);
 
                 foreach (var line in lines)
                 {
@@ -52,37 +50,47 @@ namespace WIndowsFormApp
 
         private void InitForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveLanguageAndGender();
-        }
-
-        private void SaveLanguageAndGender()
-        {
-            List<string> lines = new();
-            lines.Add($"{cbLanguage.SelectedItem}{SEPARATOR}{cbGender.SelectedItem}");
-
-            try
-            {
-                File.WriteAllLines(PATH, lines);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+            SaveLanguageAndGenderHere();
+        }      
 
         private void btnOpenApp_Click(object sender, EventArgs e)
         {
-            if (cbGender.SelectedIndex == 0) //male
+            if (cbGender.SelectedIndex == -1 || cbLanguage.SelectedIndex == -1)
+            {
+                MessageBox.Show(
+                    "Please choose gender and language", 
+                    "Choose",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                return;
+            }
+            else if (cbGender.SelectedIndex == 0) //male form
             {
                 OpenMaleForm();
             }
-            else if (cbGender.SelectedIndex == 1) 
+            else if (cbGender.SelectedIndex == 1) //female form
             {
                 OpenFemaleForm();
             }
             else
             {
                 return;
+            }
+        }
+
+        private void SaveLanguageAndGenderHere()
+        {
+            string language = cbLanguage.SelectedItem.ToString();
+            string gender = cbGender.SelectedItem.ToString();
+
+            try
+            {
+                repo.SaveLanguageAndGender(language, gender, PATH);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 

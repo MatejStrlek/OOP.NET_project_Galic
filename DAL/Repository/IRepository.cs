@@ -11,5 +11,7 @@ namespace DAL.Repository
     {
         List<Team> GetMaleTeams();
         List<Team> GetFemaleTeams();
+        void SaveLanguageAndGender(string language, string gender, string path);
+        string[] LoadLanguageAndGender(string path);
     }
 }

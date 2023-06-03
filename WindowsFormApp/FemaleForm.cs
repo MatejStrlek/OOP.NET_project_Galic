@@ -26,7 +26,6 @@ namespace WindowsFormApp
             try
             {
                 List<Team> femaleTeams = repo.GetFemaleTeams();
-                MessageBox.Show("loaded female");
                 femaleTeams.ForEach(team =>
                 {
                     cbFavoriteFemaleTeam.Items.Add(team.ToString());

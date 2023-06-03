@@ -2,6 +2,7 @@
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -51,6 +52,28 @@ namespace DAL.Repository
             }
 
             return teams;
+        }
+
+        public void SaveLanguageAndGender(string language, string gender, string path)
+        {
+            List<string> lines = new()
+            {
+                $"{language};{gender}"
+            };
+
+            File.WriteAllLines(path, lines);
+        }
+
+        public string[] LoadLanguageAndGender(string path)
+        {
+            if (!File.Exists(path))
+            {
+                File.Create(path);
+            }
+
+            string[] lines = File.ReadAllLines(path);
+
+            return lines;
         }
     }
 }
