@@ -30,6 +30,7 @@
         {
             label1 = new Label();
             cbFavoriteFemaleTeam = new ComboBox();
+            btnFavoriteFemaleTeam = new Button();
             SuspendLayout();
             // 
             // label1
@@ -49,11 +50,22 @@
             cbFavoriteFemaleTeam.Size = new Size(121, 23);
             cbFavoriteFemaleTeam.TabIndex = 1;
             // 
+            // btnFavoriteFemaleTeam
+            // 
+            btnFavoriteFemaleTeam.Location = new Point(155, 60);
+            btnFavoriteFemaleTeam.Name = "btnFavoriteFemaleTeam";
+            btnFavoriteFemaleTeam.Size = new Size(75, 23);
+            btnFavoriteFemaleTeam.TabIndex = 2;
+            btnFavoriteFemaleTeam.Text = "Add favorite";
+            btnFavoriteFemaleTeam.UseVisualStyleBackColor = true;
+            btnFavoriteFemaleTeam.Click += btnFavoriteFemaleTeam_Click;
+            // 
             // FemaleForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnFavoriteFemaleTeam);
             Controls.Add(cbFavoriteFemaleTeam);
             Controls.Add(label1);
             Name = "FemaleForm";
@@ -67,5 +79,6 @@
 
         private Label label1;
         private ComboBox cbFavoriteFemaleTeam;
+        private Button btnFavoriteFemaleTeam;
     }
 }

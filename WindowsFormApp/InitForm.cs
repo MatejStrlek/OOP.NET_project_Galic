@@ -58,25 +58,18 @@ namespace WIndowsFormApp
             if (cbGender.SelectedIndex == -1 || cbLanguage.SelectedIndex == -1)
             {
                 MessageBox.Show(
-                    "Please choose gender and language", 
+                    "Please choose gender and language",
                     "Choose",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
                 return;
             }
-            else if (cbGender.SelectedIndex == 0) //male form
-            {
-                OpenMaleForm();
-            }
-            else if (cbGender.SelectedIndex == 1) //female form
-            {
-                OpenFemaleForm();
-            }
-            else
-            {
-                return;
-            }
+            else if (cbGender.SelectedIndex == 0) //male form            
+                OpenMaleForm();            
+            else if (cbGender.SelectedIndex == 1) //female form            
+                OpenFemaleForm();         
+            else return;     
         }
 
         private void SaveLanguageAndGenderHere()

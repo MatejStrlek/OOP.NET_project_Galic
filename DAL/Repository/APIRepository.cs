@@ -56,24 +56,39 @@ namespace DAL.Repository
 
         public void SaveLanguageAndGender(string language, string gender, string path)
         {
-            List<string> lines = new()
+            if(language == null || gender == null)
+                throw new ArgumentNullException();
+
+            List<string> linesToWrite = new()
             {
                 $"{language};{gender}"
             };
 
-            File.WriteAllLines(path, lines);
+            File.WriteAllLines(path, linesToWrite);
         }
 
         public string[] LoadLanguageAndGender(string path)
         {
             if (!File.Exists(path))
-            {
-                File.Create(path);
-            }
+            File.Create(path);
 
             string[] lines = File.ReadAllLines(path);
 
             return lines;
+        }
+
+        public void SaveFavoriteTeam(string favoriteTeam, string path)
+        {
+            string[] lines = favoriteTeam.Split(" (");
+            string teamName = lines[0];
+            string teamCode = lines[1].Replace(")", "");
+
+            List<string> linesToWrite = new()
+            {
+                $"{teamName};{teamCode}"
+            };
+
+            File.WriteAllLines(path, linesToWrite);
         }
     }
 }

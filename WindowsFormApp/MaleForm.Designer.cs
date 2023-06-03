@@ -30,6 +30,7 @@
         {
             label1 = new Label();
             cbFavoriteMaleTeam = new ComboBox();
+            btnFavoriteMaleTeam = new Button();
             SuspendLayout();
             // 
             // label1
@@ -49,11 +50,22 @@
             cbFavoriteMaleTeam.Size = new Size(121, 23);
             cbFavoriteMaleTeam.TabIndex = 1;
             // 
+            // btnFavoriteMaleTeam
+            // 
+            btnFavoriteMaleTeam.Location = new Point(175, 55);
+            btnFavoriteMaleTeam.Name = "btnFavoriteMaleTeam";
+            btnFavoriteMaleTeam.Size = new Size(75, 23);
+            btnFavoriteMaleTeam.TabIndex = 2;
+            btnFavoriteMaleTeam.Text = "Add";
+            btnFavoriteMaleTeam.UseVisualStyleBackColor = true;
+            btnFavoriteMaleTeam.Click += btnFavoriteMaleTeam_Click;
+            // 
             // MaleForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnFavoriteMaleTeam);
             Controls.Add(cbFavoriteMaleTeam);
             Controls.Add(label1);
             Name = "MaleForm";
@@ -67,5 +79,6 @@
 
         private Label label1;
         private ComboBox cbFavoriteMaleTeam;
+        private Button btnFavoriteMaleTeam;
     }
 }

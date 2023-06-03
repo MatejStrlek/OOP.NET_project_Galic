@@ -13,5 +13,6 @@ namespace DAL.Repository
         List<Team> GetFemaleTeams();
         void SaveLanguageAndGender(string language, string gender, string path);
         string[] LoadLanguageAndGender(string path);
+        void SaveFavoriteTeam(string favoriteTeam, string path);
     }
 }
