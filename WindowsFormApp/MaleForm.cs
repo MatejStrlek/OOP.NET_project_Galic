@@ -11,6 +11,9 @@ namespace WindowsFormApp
         public MaleForm()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            StartPosition = FormStartPosition.CenterScreen;
+            cbFavoriteMaleTeam.Focus();
         }
 
         private void MaleForm_Load(object sender, EventArgs e)
@@ -31,7 +34,10 @@ namespace WindowsFormApp
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-        }
+
+            cbFavoriteMaleTeam.SelectedIndex = 0;
+            LoadFavoriteMaleTeamHere();
+        }      
 
         private void btnFavoriteMaleTeam_Click(object sender, EventArgs e)
         {
@@ -43,6 +49,16 @@ namespace WindowsFormApp
                     MessageBoxIcon.Error);
             else
                 repo.SaveFavoriteTeam(cbFavoriteMaleTeam.SelectedItem.ToString(), PATH);
+        }
+
+        private void LoadFavoriteMaleTeamHere()
+        {
+            string line = repo.LoadFavoriteTeam(PATH);
+
+            int selectedIndex = cbFavoriteMaleTeam.FindString(line);
+
+            if (selectedIndex != -1)
+                cbFavoriteMaleTeam.SelectedIndex = selectedIndex;
         }
     }
 }

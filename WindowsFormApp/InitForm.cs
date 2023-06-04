@@ -13,6 +13,7 @@ namespace WIndowsFormApp
         {
             InitializeComponent();
             MaximizeBox = false;
+            StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void InitForm_Load(object sender, EventArgs e)
@@ -45,12 +46,12 @@ namespace WIndowsFormApp
             {
                 MessageBox.Show(ex.Message);
             }
-        }      
+        }
 
         private void InitForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveLanguageAndGenderHere();
-        }      
+        }
 
         private void btnOpenApp_Click(object sender, EventArgs e)
         {
@@ -65,10 +66,28 @@ namespace WIndowsFormApp
                 return;
             }
             else if (cbGender.SelectedIndex == 0) //male form            
-                OpenMaleForm();            
+                OpenMaleForm();
             else if (cbGender.SelectedIndex == 1) //female form            
-                OpenFemaleForm();         
-            else return;     
+                OpenFemaleForm();
+            else return;
+        }
+        
+        private void OpenFemaleForm()
+        {
+            Form femaleForm = new FemaleForm();
+            femaleForm.Show();
+        }
+
+        private void OpenMaleForm()
+        {
+            Form maleForm = new MaleForm();
+            maleForm.Show();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            SaveLanguageAndGenderHere();
+            Close();
         }
 
         private void SaveLanguageAndGenderHere()
@@ -86,16 +105,5 @@ namespace WIndowsFormApp
             }
         }
 
-        private void OpenFemaleForm()
-        {
-            Form femaleForm = new FemaleForm();
-            femaleForm.Show();
-        }
-
-        private void OpenMaleForm()
-        {
-            Form maleForm = new MaleForm();
-            maleForm.Show();
-        }
     }
 }

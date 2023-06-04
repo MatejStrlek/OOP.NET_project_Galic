@@ -7,10 +7,14 @@ namespace WindowsFormApp
     {
         public static readonly IRepository repo = RepositoryFactory.GetRepository();
         private const string PATH = "favorite_female_team.txt";
+        private const char SEPARATOR = ';';
 
         public FemaleForm()
         {
             InitializeComponent();
+            MaximizeBox = false;
+            StartPosition = FormStartPosition.CenterScreen;
+            cbFavoriteFemaleTeam.Focus();          
         }
 
         private void FemaleForm_Load(object sender, EventArgs e)
@@ -31,6 +35,9 @@ namespace WindowsFormApp
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+
+            cbFavoriteFemaleTeam.SelectedIndex = 0;
+            LoadFavoriteFemaleTeamHere();
         }
 
         private void btnFavoriteFemaleTeam_Click(object sender, EventArgs e)
@@ -43,6 +50,16 @@ namespace WindowsFormApp
                     MessageBoxIcon.Error);
             else
             repo.SaveFavoriteTeam(cbFavoriteFemaleTeam.SelectedItem.ToString(), PATH);
+        }
+
+        private void LoadFavoriteFemaleTeamHere()
+        {
+            string line = repo.LoadFavoriteTeam(PATH);
+
+            int selectedIndex = cbFavoriteFemaleTeam.FindString(line);
+
+            if (selectedIndex != -1)
+                cbFavoriteFemaleTeam.SelectedIndex = selectedIndex;
         }
     }
 }

@@ -33,6 +33,7 @@
             cbGender = new ComboBox();
             cbLanguage = new ComboBox();
             btnOpenApp = new Button();
+            btnClose = new Button();
             SuspendLayout();
             // 
             // label1
@@ -73,7 +74,7 @@
             // 
             // btnOpenApp
             // 
-            btnOpenApp.Location = new Point(110, 169);
+            btnOpenApp.Location = new Point(24, 169);
             btnOpenApp.Name = "btnOpenApp";
             btnOpenApp.Size = new Size(96, 44);
             btnOpenApp.TabIndex = 4;
@@ -81,11 +82,22 @@
             btnOpenApp.UseVisualStyleBackColor = true;
             btnOpenApp.Click += btnOpenApp_Click;
             // 
+            // btnClose
+            // 
+            btnClose.Location = new Point(190, 169);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(96, 44);
+            btnClose.TabIndex = 5;
+            btnClose.Text = "Close";
+            btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
+            // 
             // InitForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(318, 225);
+            Controls.Add(btnClose);
             Controls.Add(btnOpenApp);
             Controls.Add(cbLanguage);
             Controls.Add(cbGender);
@@ -106,5 +118,6 @@
         private ComboBox cbGender;
         private ComboBox cbLanguage;
         private Button btnOpenApp;
+        private Button btnClose;
     }
 }

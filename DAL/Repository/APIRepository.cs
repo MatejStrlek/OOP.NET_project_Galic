@@ -70,18 +70,17 @@ namespace DAL.Repository
             return lines;
         }
 
-        public void SaveFavoriteTeam(string favoriteTeam, string path)
+        public void SaveFavoriteTeam(string favoriteTeam, string path) 
+            => File.WriteAllText(path, favoriteTeam);
+
+        public string LoadFavoriteTeam(string path)
         {
-            string[] lines = favoriteTeam.Split(" (");
-            string teamName = lines[0];
-            string teamCode = lines[1].Replace(")", "");
+            if (!File.Exists(path))
+                File.Create(path);
 
-            List<string> linesToWrite = new()
-            {
-                $"{teamName};{teamCode}"
-            };
+            string lines = File.ReadAllText(path);
 
-            File.WriteAllLines(path, linesToWrite);
+            return lines;
         }
     }
 }
