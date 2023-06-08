@@ -74,22 +74,28 @@
             // 
             // btnOpenApp
             // 
+            btnOpenApp.BackColor = Color.ForestGreen;
+            btnOpenApp.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            btnOpenApp.ForeColor = SystemColors.ButtonFace;
             btnOpenApp.Location = new Point(24, 169);
             btnOpenApp.Name = "btnOpenApp";
             btnOpenApp.Size = new Size(96, 44);
             btnOpenApp.TabIndex = 4;
             btnOpenApp.Text = "Open App";
-            btnOpenApp.UseVisualStyleBackColor = true;
+            btnOpenApp.UseVisualStyleBackColor = false;
             btnOpenApp.Click += btnOpenApp_Click;
             // 
             // btnClose
             // 
+            btnClose.BackColor = Color.Red;
+            btnClose.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            btnClose.ForeColor = SystemColors.ButtonFace;
             btnClose.Location = new Point(190, 169);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(96, 44);
             btnClose.TabIndex = 5;
             btnClose.Text = "Close";
-            btnClose.UseVisualStyleBackColor = true;
+            btnClose.UseVisualStyleBackColor = false;
             btnClose.Click += btnClose_Click;
             // 
             // InitForm

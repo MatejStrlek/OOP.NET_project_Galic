@@ -23,7 +23,7 @@ namespace WindowsFormApp
                 List<Team> maleTeams = repo.GetMaleTeams();
                 maleTeams.ForEach(team =>
                 {
-                    cbFavoriteMaleTeam.Items.Add(team.ToString());
+                    cbFavoriteMaleTeam.Items.Add(team.GetCountryAndCode());
                 });
             }
             catch (Exception)
@@ -59,6 +59,8 @@ namespace WindowsFormApp
 
             if (selectedIndex != -1)
                 cbFavoriteMaleTeam.SelectedIndex = selectedIndex;
+            else 
+                cbFavoriteMaleTeam.SelectedIndex = 0;
         }
     }
 }

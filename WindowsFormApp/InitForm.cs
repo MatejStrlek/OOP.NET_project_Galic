@@ -71,7 +71,7 @@ namespace WIndowsFormApp
                 OpenFemaleForm();
             else return;
         }
-        
+
         private void OpenFemaleForm()
         {
             Form femaleForm = new FemaleForm();
