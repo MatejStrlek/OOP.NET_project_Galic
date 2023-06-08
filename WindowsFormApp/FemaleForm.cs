@@ -7,7 +7,6 @@ namespace WindowsFormApp
     {
         public static readonly IRepository repo = RepositoryFactory.GetRepository();
         private const string PATH = "favorite_female_team.txt";
-        private const char SEPARATOR = ';';
 
         public FemaleForm()
         {
@@ -24,7 +23,7 @@ namespace WindowsFormApp
                 List<Team> femaleTeams = repo.GetFemaleTeams();
                 femaleTeams.ForEach(team =>
                 {
-                    cbFavoriteFemaleTeam.Items.Add(team.ToString());
+                    cbFavoriteFemaleTeam.Items.Add(team.GetCountryAndCode());
                 });
             }
             catch (Exception)
