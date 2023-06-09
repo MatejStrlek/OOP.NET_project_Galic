@@ -1,19 +1,25 @@
 ﻿using DAL.DAO;
 using DAL.Repository;
+using System.IO;
 
 namespace WindowsFormApp
 {
     public partial class FemaleForm : Form
     {
         public static readonly IRepository repo = RepositoryFactory.GetRepository();
-        private const string PATH = "favorite_female_team.txt";
+        private static string PATH =
+            Path.Combine(
+                Directory.GetParent(
+                    Directory.GetParent(
+                        Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName,
+                "favorite_female_team.txt");
 
         public FemaleForm()
         {
             InitializeComponent();
             MaximizeBox = false;
             StartPosition = FormStartPosition.CenterScreen;
-            cbFavoriteFemaleTeam.Focus();          
+            cbFavoriteFemaleTeam.Focus();
         }
 
         private void FemaleForm_Load(object sender, EventArgs e)
@@ -35,8 +41,14 @@ namespace WindowsFormApp
                     MessageBoxIcon.Error);
             }
 
-            cbFavoriteFemaleTeam.SelectedIndex = 0;
-            LoadFavoriteFemaleTeamHere();
+            if (!File.Exists(PATH))
+            {
+                cbFavoriteFemaleTeam.SelectedIndex = 0;
+            }
+            else
+            {
+                LoadFavoriteFemaleTeamHere();
+            }      
         }
 
         private void btnFavoriteFemaleTeam_Click(object sender, EventArgs e)
@@ -53,12 +65,17 @@ namespace WindowsFormApp
 
         private void LoadFavoriteFemaleTeamHere()
         {
-            string line = repo.LoadFavoriteTeam(PATH);
+            string[] line = repo.LoadFavoriteTeam(PATH);
 
-            int selectedIndex = cbFavoriteFemaleTeam.FindString(line);
-
-            if (selectedIndex != -1)
-                cbFavoriteFemaleTeam.SelectedIndex = selectedIndex;
+            if (line.Length == 0)
+            {
+                cbFavoriteFemaleTeam.SelectedIndex = 0;
+            }
+            else
+            {
+                int selectedIndex = cbFavoriteFemaleTeam.FindString(line[0]);
+                    cbFavoriteFemaleTeam.SelectedIndex = selectedIndex;
+            }
         }
     }
 }

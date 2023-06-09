@@ -6,7 +6,12 @@ namespace WIndowsFormApp
     public partial class InitForm : Form
     {
         public static readonly IRepository repo = RepositoryFactory.GetRepository();
-        private const string PATH = "language_and_gender.txt";
+        private static string PATH =
+            Path.Combine(
+                Directory.GetParent(
+                    Directory.GetParent(
+                        Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName, 
+                "language_and_gender.txt");
         private const char SEPARATOR = ';';
 
         public InitForm()
@@ -18,10 +23,15 @@ namespace WIndowsFormApp
 
         private void InitForm_Load(object sender, EventArgs e)
         {
-            cbLanguage.SelectedIndex = 0;
-            cbGender.SelectedIndex = 0;
-
-            LoadLanguageAndGenderHere();
+            if (!File.Exists(PATH))
+            {
+                cbLanguage.SelectedIndex = 0;
+                cbGender.SelectedIndex = 0;
+            }
+            else
+            {
+                LoadLanguageAndGenderHere();
+            }
         }
 
         private void LoadLanguageAndGenderHere()
@@ -96,7 +106,7 @@ namespace WIndowsFormApp
             string gender = cbGender.SelectedItem.ToString();
 
             try
-            {
+            {              
                 repo.SaveLanguageAndGender(language, gender, PATH);
             }
             catch (Exception ex)

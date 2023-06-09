@@ -6,7 +6,12 @@ namespace WindowsFormApp
     public partial class MaleForm : Form
     {
         public static readonly IRepository repo = RepositoryFactory.GetRepository();
-        private const string PATH = "favorite_male_team.txt";
+        private static string PATH =
+            Path.Combine(
+                Directory.GetParent(
+                    Directory.GetParent(
+                        Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName,
+                "favorite_male_team.txt");
 
         public MaleForm()
         {
@@ -35,8 +40,14 @@ namespace WindowsFormApp
                     MessageBoxIcon.Error);
             }
 
-            cbFavoriteMaleTeam.SelectedIndex = 0;
-            LoadFavoriteMaleTeamHere();
+            if (!File.Exists(PATH))
+            {
+                cbFavoriteMaleTeam.SelectedIndex = 0;
+            }
+            else
+            {
+                LoadFavoriteMaleTeamHere();
+            }          
         }      
 
         private void btnFavoriteMaleTeam_Click(object sender, EventArgs e)
@@ -53,14 +64,17 @@ namespace WindowsFormApp
 
         private void LoadFavoriteMaleTeamHere()
         {
-            string line = repo.LoadFavoriteTeam(PATH);
+            string[] line = repo.LoadFavoriteTeam(PATH);
 
-            int selectedIndex = cbFavoriteMaleTeam.FindString(line);
-
-            if (selectedIndex != -1)
-                cbFavoriteMaleTeam.SelectedIndex = selectedIndex;
-            else 
+            if(line.Length == 0)
+            {
                 cbFavoriteMaleTeam.SelectedIndex = 0;
+            }
+            else
+            {
+                int selectedIndex = cbFavoriteMaleTeam.FindString(line[0]);
+                cbFavoriteMaleTeam.SelectedIndex = selectedIndex;
+            }     
         }
     }
 }
