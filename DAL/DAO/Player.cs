@@ -3,12 +3,17 @@
     public class Player
     {
         public Player(string name, int dressNumber, string position, bool isCaptain, bool isFavorite)
+            : this(name, dressNumber, position, isCaptain)
+        {
+            IsFavorite = isFavorite;
+        }
+
+        public Player(string name, int dressNumber, string position, bool isCaptain)
         {
             Name = name;
             DressNumber = dressNumber;
             Position = position;
             IsCaptain = isCaptain;
-            IsFavorite = isFavorite;
         }
 
         public string Name { get; set; }

@@ -48,7 +48,9 @@ namespace WindowsFormApp
             else
             {
                 LoadFavoriteFemaleTeamHere();
-            }      
+            }
+
+            repo.GetFemalePlayers();
         }
 
         private void btnFavoriteFemaleTeam_Click(object sender, EventArgs e)
