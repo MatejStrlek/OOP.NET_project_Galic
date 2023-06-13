@@ -48,8 +48,6 @@ namespace WindowsFormApp
             {
                 LoadFavoriteMaleTeamHere();
             }
-
-            repo.GetMalePlayers();
         }      
 
         private void btnFavoriteMaleTeam_Click(object sender, EventArgs e)

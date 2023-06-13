@@ -223,6 +223,16 @@ namespace DAL.Repository
             }
 
             return null;
-        }      
+        }
+
+        public void SaveFavoritePlayers(List<string> players, string path)
+            => File.WriteAllLines(path, players);
+
+        public string[] LoadFavoritePlayers(string path)
+        {
+            string[] lines = File.ReadAllLines(path);
+
+            return lines;
+        }
     }
 }

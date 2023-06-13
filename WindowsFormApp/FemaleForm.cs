@@ -7,12 +7,18 @@ namespace WindowsFormApp
     public partial class FemaleForm : Form
     {
         public static readonly IRepository repo = RepositoryFactory.GetRepository();
-        private static string PATH =
+        private static string FAVORITE_FEMALE_TEAM_PATH =
             Path.Combine(
                 Directory.GetParent(
                     Directory.GetParent(
                         Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName,
                 "favorite_female_team.txt");
+        private static string FAVORITE_FEMALE_PLAYERS_PATH =
+            Path.Combine(
+                Directory.GetParent(
+                    Directory.GetParent(
+                        Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName,
+                "favorite_female_players.txt");
 
         public FemaleForm()
         {
@@ -23,6 +29,12 @@ namespace WindowsFormApp
         }
 
         private void FemaleForm_Load(object sender, EventArgs e)
+        {
+            LoadFemaleTeamsToCb();
+            LoadFemalePlayersToClb();
+        }        
+
+        private void LoadFemaleTeamsToCb()
         {
             try
             {
@@ -41,7 +53,7 @@ namespace WindowsFormApp
                     MessageBoxIcon.Error);
             }
 
-            if (!File.Exists(PATH))
+            if (!File.Exists(FAVORITE_FEMALE_TEAM_PATH))
             {
                 cbFavoriteFemaleTeam.SelectedIndex = 0;
             }
@@ -49,8 +61,6 @@ namespace WindowsFormApp
             {
                 LoadFavoriteFemaleTeamHere();
             }
-
-            repo.GetFemalePlayers();
         }
 
         private void btnFavoriteFemaleTeam_Click(object sender, EventArgs e)
@@ -62,12 +72,90 @@ namespace WindowsFormApp
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             else
-            repo.SaveFavoriteTeam(cbFavoriteFemaleTeam.SelectedItem.ToString(), PATH);
+                repo.SaveFavoriteTeam(
+                    cbFavoriteFemaleTeam.SelectedItem.ToString(),
+                    FAVORITE_FEMALE_TEAM_PATH);
+
+            LoadFemalePlayersToClb();
+        }
+
+        private void LoadFemalePlayersToClb()
+        {
+            clbPlayers.Items.Clear();
+
+            try
+            {
+                repo.GetFemalePlayers()
+                    .ForEach(player =>
+                    {
+                        clbPlayers.Items.Add(player.GetNameAndDress());
+                    });
+
+                if (File.Exists(FAVORITE_FEMALE_PLAYERS_PATH))
+                {
+                    List<string> favoriteFemalePlayers
+                        = repo.LoadFavoritePlayers(FAVORITE_FEMALE_PLAYERS_PATH).ToList();
+
+                    for (int i = 0; i < clbPlayers.Items.Count; i++)
+                    {
+                        if (favoriteFemalePlayers.Contains(clbPlayers.Items[i].ToString()))
+                        {
+                            clbPlayers.SetItemChecked(i, true);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                clbPlayers.Items.Add("No players found!");
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnSaveFavoriteFemalePlayers_Click(object sender, EventArgs e)
+        {
+            CheckIfMoreThanX();
+
+            if (clbPlayers.CheckedItems.Count == 0)
+            {
+                MessageBox.Show(
+                    "Please select at least one player!",
+                    "Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                    );
+            }
+            else
+            {
+                List<string> players = new();
+
+                foreach (string player in clbPlayers.CheckedItems)
+                {
+                    players.Add(player);
+                }
+
+                repo.SaveFavoritePlayers(players, FAVORITE_FEMALE_PLAYERS_PATH);
+            }
+        }
+
+        private void CheckIfMoreThanX()
+        {
+            var x = 3;
+
+            if (clbPlayers.CheckedItems.Count > x)
+            {
+                MessageBox.Show(
+                    $"More than {x} players!",
+                    "Info",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                    );
+            }
         }
 
         private void LoadFavoriteFemaleTeamHere()
         {
-            string[] line = repo.LoadFavoriteTeam(PATH);
+            string[] line = repo.LoadFavoriteTeam(FAVORITE_FEMALE_TEAM_PATH);
 
             if (line.Length == 0)
             {
@@ -76,7 +164,7 @@ namespace WindowsFormApp
             else
             {
                 int selectedIndex = cbFavoriteFemaleTeam.FindString(line[0]);
-                    cbFavoriteFemaleTeam.SelectedIndex = selectedIndex;
+                cbFavoriteFemaleTeam.SelectedIndex = selectedIndex;
             }
         }
     }

@@ -27,7 +27,7 @@
             return $"{Name} ({DressNumber}) - {Position} - {(IsCaptain ? "Captain" : "Player")}";
         }
 
-        public string GetNameForCheckBox()
+        public string GetNameAndDress()
         => $"{Name} ({DressNumber})";
     }
 }

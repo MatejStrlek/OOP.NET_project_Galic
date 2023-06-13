@@ -12,5 +12,7 @@ namespace DAL.Repository
         string[] LoadLanguageAndGender(string path);
         void SaveFavoriteTeam(string favoriteTeam, string path);
         string[] LoadFavoriteTeam(string path);
+        void SaveFavoritePlayers(List<string> players, string path);
+        string[] LoadFavoritePlayers(string path);
     }
 }
