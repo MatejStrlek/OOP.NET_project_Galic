@@ -1,5 +1,6 @@
 ﻿using DAL.DAO;
 using DAL.Repository;
+using System.Collections;
 using System.IO;
 
 namespace WindowsFormApp
@@ -26,6 +27,17 @@ namespace WindowsFormApp
             MaximizeBox = false;
             StartPosition = FormStartPosition.CenterScreen;
             cbFavoriteFemaleTeam.Focus();
+            AllowDropOnListBoxes();
+        }
+
+        private void AllowDropOnListBoxes()
+        {
+            var listBoxes = this.Controls.OfType<ListBox>();
+
+            foreach (var listBox in listBoxes)
+            {
+                listBox.AllowDrop = true; 
+            }
         }
 
         private void FemaleForm_Load(object sender, EventArgs e)
@@ -102,7 +114,7 @@ namespace WindowsFormApp
                     }
 
                     repo.SaveFavoritePlayers(players, FAVORITE_FEMALE_PLAYERS_PATH);
-                } 
+                }
             }
 
             List<string> favFemalePlayers = LoadFemalePlayersToClb();
@@ -198,6 +210,37 @@ namespace WindowsFormApp
                 int selectedIndex = cbFavoriteFemaleTeam.FindString(line[0]);
                 cbFavoriteFemaleTeam.SelectedIndex = selectedIndex;
             }
+        }
+
+        private void btnToOtherPlayers_Click(object sender, EventArgs e)
+        {
+            MovePlayers(lbFavoritePlayers, lbOtherPlayers, lbFavoritePlayers.SelectedItems);
+        }
+
+        private void btnToFavoritePlayers_Click(object sender, EventArgs e)
+        {
+            MovePlayers(lbOtherPlayers, lbFavoritePlayers, lbOtherPlayers.SelectedItems);
+        }
+
+        private void MovePlayers(ListBox fromList, ListBox toList, IEnumerable selectedItems)
+        {
+            List<string> players = new();
+
+            foreach (string player in selectedItems)
+            {
+                players.Add(player);
+            }
+
+            foreach (string player in players)
+            {
+                fromList.Items.Remove(player);
+                toList.Items.Add(player);
+            }
+        }
+
+        private void lbFavoritePlayers_MouseDown(object sender, MouseEventArgs e)
+        {
+
         }
     }
 }

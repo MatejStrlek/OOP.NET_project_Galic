@@ -38,6 +38,9 @@
             lbFavoritePlayers = new ListBox();
             label3 = new Label();
             label4 = new Label();
+            playerControl = new Controls.PlayerControl();
+            btnToOtherPlayers = new Button();
+            btnToFavoritePlayers = new Button();
             SuspendLayout();
             // 
             // label1
@@ -88,7 +91,7 @@
             // 
             btnSaveFavoriteFemalePlayers.Location = new Point(12, 238);
             btnSaveFavoriteFemalePlayers.Name = "btnSaveFavoriteFemalePlayers";
-            btnSaveFavoriteFemalePlayers.Size = new Size(149, 28);
+            btnSaveFavoriteFemalePlayers.Size = new Size(202, 28);
             btnSaveFavoriteFemalePlayers.TabIndex = 5;
             btnSaveFavoriteFemalePlayers.Text = "Save favorite players";
             btnSaveFavoriteFemalePlayers.UseVisualStyleBackColor = true;
@@ -98,7 +101,7 @@
             // 
             lbOtherPlayers.FormattingEnabled = true;
             lbOtherPlayers.ItemHeight = 15;
-            lbOtherPlayers.Location = new Point(507, 66);
+            lbOtherPlayers.Location = new Point(573, 66);
             lbOtherPlayers.Name = "lbOtherPlayers";
             lbOtherPlayers.Size = new Size(267, 289);
             lbOtherPlayers.TabIndex = 6;
@@ -111,6 +114,7 @@
             lbFavoritePlayers.Name = "lbFavoritePlayers";
             lbFavoritePlayers.Size = new Size(266, 289);
             lbFavoritePlayers.TabIndex = 7;
+            lbFavoritePlayers.MouseDown += lbFavoritePlayers_MouseDown;
             // 
             // label3
             // 
@@ -124,17 +128,47 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(507, 48);
+            label4.Location = new Point(560, 48);
             label4.Name = "label4";
             label4.Size = new Size(80, 15);
             label4.TabIndex = 9;
             label4.Text = "Other players:";
             // 
+            // playerControl
+            // 
+            playerControl.Location = new Point(358, 361);
+            playerControl.Name = "playerControl";
+            playerControl.Size = new Size(354, 250);
+            playerControl.TabIndex = 10;
+            // 
+            // btnToOtherPlayers
+            // 
+            btnToOtherPlayers.Location = new Point(492, 160);
+            btnToOtherPlayers.Name = "btnToOtherPlayers";
+            btnToOtherPlayers.Size = new Size(75, 42);
+            btnToOtherPlayers.TabIndex = 11;
+            btnToOtherPlayers.Text = ">";
+            btnToOtherPlayers.UseVisualStyleBackColor = true;
+            btnToOtherPlayers.Click += btnToOtherPlayers_Click;
+            // 
+            // btnToFavoritePlayers
+            // 
+            btnToFavoritePlayers.Location = new Point(492, 208);
+            btnToFavoritePlayers.Name = "btnToFavoritePlayers";
+            btnToFavoritePlayers.Size = new Size(75, 42);
+            btnToFavoritePlayers.TabIndex = 12;
+            btnToFavoritePlayers.Text = "<";
+            btnToFavoritePlayers.UseVisualStyleBackColor = true;
+            btnToFavoritePlayers.Click += btnToFavoritePlayers_Click;
+            // 
             // FemaleForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(988, 527);
+            ClientSize = new Size(851, 618);
+            Controls.Add(btnToFavoritePlayers);
+            Controls.Add(btnToOtherPlayers);
+            Controls.Add(playerControl);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(lbFavoritePlayers);
@@ -164,5 +198,8 @@
         private ListBox lbFavoritePlayers;
         private Label label3;
         private Label label4;
+        private Controls.PlayerControl playerControl;
+        private Button btnToOtherPlayers;
+        private Button btnToFavoritePlayers;
     }
 }
