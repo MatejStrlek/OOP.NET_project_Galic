@@ -34,6 +34,10 @@
             clbPlayers = new CheckedListBox();
             label2 = new Label();
             btnSaveFavoriteFemalePlayers = new Button();
+            lbOtherPlayers = new ListBox();
+            lbFavoritePlayers = new ListBox();
+            label3 = new Label();
+            label4 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -90,11 +94,51 @@
             btnSaveFavoriteFemalePlayers.UseVisualStyleBackColor = true;
             btnSaveFavoriteFemalePlayers.Click += btnSaveFavoriteFemalePlayers_Click;
             // 
+            // lbOtherPlayers
+            // 
+            lbOtherPlayers.FormattingEnabled = true;
+            lbOtherPlayers.ItemHeight = 15;
+            lbOtherPlayers.Location = new Point(507, 66);
+            lbOtherPlayers.Name = "lbOtherPlayers";
+            lbOtherPlayers.Size = new Size(267, 289);
+            lbOtherPlayers.TabIndex = 6;
+            // 
+            // lbFavoritePlayers
+            // 
+            lbFavoritePlayers.FormattingEnabled = true;
+            lbFavoritePlayers.ItemHeight = 15;
+            lbFavoritePlayers.Location = new Point(220, 66);
+            lbFavoritePlayers.Name = "lbFavoritePlayers";
+            lbFavoritePlayers.Size = new Size(266, 289);
+            lbFavoritePlayers.TabIndex = 7;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(220, 48);
+            label3.Name = "label3";
+            label3.Size = new Size(100, 15);
+            label3.TabIndex = 8;
+            label3.Text = "Favorite player(s):";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(507, 48);
+            label4.Name = "label4";
+            label4.Size = new Size(80, 15);
+            label4.TabIndex = 9;
+            label4.Text = "Other players:";
+            // 
             // FemaleForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(988, 527);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(lbFavoritePlayers);
+            Controls.Add(lbOtherPlayers);
             Controls.Add(btnSaveFavoriteFemalePlayers);
             Controls.Add(label2);
             Controls.Add(clbPlayers);
@@ -116,5 +160,9 @@
         private CheckedListBox clbPlayers;
         private Label label2;
         private Button btnSaveFavoriteFemalePlayers;
+        private ListBox lbOtherPlayers;
+        private ListBox lbFavoritePlayers;
+        private Label label3;
+        private Label label4;
     }
 }

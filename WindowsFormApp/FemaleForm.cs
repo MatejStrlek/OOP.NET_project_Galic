@@ -32,7 +32,7 @@ namespace WindowsFormApp
         {
             LoadFemaleTeamsToCb();
             LoadFemalePlayersToClb();
-        }        
+        }
 
         private void LoadFemaleTeamsToCb()
         {
@@ -79,7 +79,54 @@ namespace WindowsFormApp
             LoadFemalePlayersToClb();
         }
 
-        private void LoadFemalePlayersToClb()
+        private void btnSaveFavoriteFemalePlayers_Click(object sender, EventArgs e)
+        {
+            if (clbPlayers.CheckedItems.Count == 0)
+            {
+                MessageBox.Show(
+                    "Please select at least one player!",
+                    "Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                    );
+            }
+            else
+            {
+                if (!CheckIfMoreThanX())
+                {
+                    List<string> players = new();
+
+                    foreach (string player in clbPlayers.CheckedItems)
+                    {
+                        players.Add(player);
+                    }
+
+                    repo.SaveFavoritePlayers(players, FAVORITE_FEMALE_PLAYERS_PATH);
+                } 
+            }
+
+            List<string> favFemalePlayers = LoadFemalePlayersToClb();
+            LoadFemalePlayersTolb(favFemalePlayers);
+        }
+
+        private bool CheckIfMoreThanX()
+        {
+            var x = 3;
+
+            if (clbPlayers.CheckedItems.Count > x)
+            {
+                MessageBox.Show(
+                    $"More than {x} players!",
+                    "Info",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                    );
+                return true;
+            }
+            return false;
+        }
+
+        private List<string> LoadFemalePlayersToClb()
         {
             clbPlayers.Items.Clear();
 
@@ -103,6 +150,8 @@ namespace WindowsFormApp
                             clbPlayers.SetItemChecked(i, true);
                         }
                     }
+
+                    return favoriteFemalePlayers;
                 }
             }
             catch (Exception ex)
@@ -110,46 +159,29 @@ namespace WindowsFormApp
                 clbPlayers.Items.Add("No players found!");
                 MessageBox.Show(ex.Message);
             }
+
+            return new List<string>();
         }
 
-        private void btnSaveFavoriteFemalePlayers_Click(object sender, EventArgs e)
+        private void LoadFemalePlayersTolb(List<string> favFemalePlayers)
         {
-            CheckIfMoreThanX();
-
-            if (clbPlayers.CheckedItems.Count == 0)
+            if (favFemalePlayers.Any())
             {
-                MessageBox.Show(
-                    "Please select at least one player!",
-                    "Warning",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                    );
-            }
-            else
-            {
-                List<string> players = new();
+                lbFavoritePlayers.Items.Clear();
+                lbOtherPlayers.Items.Clear();
 
-                foreach (string player in clbPlayers.CheckedItems)
+                foreach (string player in favFemalePlayers)
                 {
-                    players.Add(player);
+                    lbFavoritePlayers.Items.Add(player);
                 }
 
-                repo.SaveFavoritePlayers(players, FAVORITE_FEMALE_PLAYERS_PATH);
-            }
-        }
-
-        private void CheckIfMoreThanX()
-        {
-            var x = 3;
-
-            if (clbPlayers.CheckedItems.Count > x)
-            {
-                MessageBox.Show(
-                    $"More than {x} players!",
-                    "Info",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                    );
+                foreach (string player in clbPlayers.Items)
+                {
+                    if (!favFemalePlayers.Contains(player))
+                    {
+                        lbOtherPlayers.Items.Add(player);
+                    }
+                }
             }
         }
 
