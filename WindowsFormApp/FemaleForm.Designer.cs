@@ -73,15 +73,15 @@
             // clbPlayers
             // 
             clbPlayers.FormattingEnabled = true;
-            clbPlayers.Location = new Point(12, 102);
+            clbPlayers.Location = new Point(12, 99);
             clbPlayers.Name = "clbPlayers";
-            clbPlayers.Size = new Size(202, 130);
+            clbPlayers.Size = new Size(202, 256);
             clbPlayers.TabIndex = 3;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 84);
+            label2.Location = new Point(12, 81);
             label2.Name = "label2";
             label2.Size = new Size(176, 15);
             label2.TabIndex = 4;
@@ -89,7 +89,7 @@
             // 
             // btnSaveFavoriteFemalePlayers
             // 
-            btnSaveFavoriteFemalePlayers.Location = new Point(12, 238);
+            btnSaveFavoriteFemalePlayers.Location = new Point(12, 361);
             btnSaveFavoriteFemalePlayers.Name = "btnSaveFavoriteFemalePlayers";
             btnSaveFavoriteFemalePlayers.Size = new Size(202, 28);
             btnSaveFavoriteFemalePlayers.TabIndex = 5;
@@ -105,6 +105,7 @@
             lbOtherPlayers.Name = "lbOtherPlayers";
             lbOtherPlayers.Size = new Size(267, 289);
             lbOtherPlayers.TabIndex = 6;
+            lbOtherPlayers.MouseDown += lbOtherPlayers_MouseDown;
             // 
             // lbFavoritePlayers
             // 
@@ -136,9 +137,9 @@
             // 
             // playerControl
             // 
-            playerControl.Location = new Point(358, 361);
+            playerControl.Location = new Point(343, 361);
             playerControl.Name = "playerControl";
-            playerControl.Size = new Size(354, 250);
+            playerControl.Size = new Size(427, 250);
             playerControl.TabIndex = 10;
             // 
             // btnToOtherPlayers

@@ -2,6 +2,7 @@
 using DAL.Repository;
 using System.Collections;
 using System.IO;
+using WindowsFormApp.Controls;
 
 namespace WindowsFormApp
 {
@@ -36,7 +37,7 @@ namespace WindowsFormApp
 
             foreach (var listBox in listBoxes)
             {
-                listBox.AllowDrop = true; 
+                listBox.AllowDrop = true;
             }
         }
 
@@ -240,7 +241,27 @@ namespace WindowsFormApp
 
         private void lbFavoritePlayers_MouseDown(object sender, MouseEventArgs e)
         {
+            ShowOnPlayerControl(lbFavoritePlayers);
+        }     
 
+        private void lbOtherPlayers_MouseDown(object sender, MouseEventArgs e)
+        {
+            ShowOnPlayerControl(lbOtherPlayers);
+        }
+
+        private void ShowOnPlayerControl(ListBox lbPlayers)
+        {
+            if (lbPlayers.SelectedItem != null)
+            {
+                string selectedFavPlayer = lbPlayers.SelectedItem.ToString();
+                string[] playerParts = selectedFavPlayer.Split(" (");
+
+                string playerName = playerParts[0];
+                List<Player> players = repo.GetFemalePlayers();
+                Player player = players.Find(player => player.Name == playerName);
+
+                playerControl.Player = player;               
+            }
         }
     }
 }

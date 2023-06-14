@@ -40,8 +40,10 @@
             label1 = new Label();
             btnUploadPhoto = new Button();
             pbPlayer = new PictureBox();
+            pbStar = new PictureBox();
             gbPlayer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbPlayer).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbStar).BeginInit();
             SuspendLayout();
             // 
             // gbPlayer
@@ -56,7 +58,7 @@
             gbPlayer.Controls.Add(label1);
             gbPlayer.Location = new Point(3, 3);
             gbPlayer.Name = "gbPlayer";
-            gbPlayer.Size = new Size(113, 207);
+            gbPlayer.Size = new Size(184, 207);
             gbPlayer.TabIndex = 0;
             gbPlayer.TabStop = false;
             gbPlayer.Text = "Player";
@@ -117,7 +119,7 @@
             tbName.Location = new Point(6, 40);
             tbName.Name = "tbName";
             tbName.ReadOnly = true;
-            tbName.Size = new Size(100, 23);
+            tbName.Size = new Size(172, 23);
             tbName.TabIndex = 1;
             // 
             // label1
@@ -141,25 +143,37 @@
             // pbPlayer
             // 
             pbPlayer.Image = (Image)resources.GetObject("pbPlayer.Image");
-            pbPlayer.Location = new Point(122, 11);
+            pbPlayer.Location = new Point(193, 11);
             pbPlayer.Name = "pbPlayer";
             pbPlayer.Size = new Size(229, 194);
             pbPlayer.SizeMode = PictureBoxSizeMode.StretchImage;
             pbPlayer.TabIndex = 2;
             pbPlayer.TabStop = false;
             // 
+            // pbStar
+            // 
+            pbStar.Image = (Image)resources.GetObject("pbStar.Image");
+            pbStar.Location = new Point(374, 211);
+            pbStar.Name = "pbStar";
+            pbStar.Size = new Size(48, 36);
+            pbStar.SizeMode = PictureBoxSizeMode.StretchImage;
+            pbStar.TabIndex = 3;
+            pbStar.TabStop = false;
+            // 
             // PlayerControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(pbStar);
             Controls.Add(pbPlayer);
             Controls.Add(btnUploadPhoto);
             Controls.Add(gbPlayer);
             Name = "PlayerControl";
-            Size = new Size(354, 250);
+            Size = new Size(425, 250);
             gbPlayer.ResumeLayout(false);
             gbPlayer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pbPlayer).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbStar).EndInit();
             ResumeLayout(false);
         }
 
@@ -176,5 +190,6 @@
         private Label label4;
         private Button btnUploadPhoto;
         private PictureBox pbPlayer;
+        private PictureBox pbStar;
     }
 }
