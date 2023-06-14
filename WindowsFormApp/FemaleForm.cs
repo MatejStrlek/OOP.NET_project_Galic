@@ -242,7 +242,7 @@ namespace WindowsFormApp
         private void lbFavoritePlayers_MouseDown(object sender, MouseEventArgs e)
         {
             ShowOnPlayerControl(lbFavoritePlayers, true);
-        }     
+        }
 
         private void lbOtherPlayers_MouseDown(object sender, MouseEventArgs e)
         {
@@ -261,8 +261,13 @@ namespace WindowsFormApp
                 Player player = players.Find(player => player.Name == playerName);
                 player.IsFavorite = isFavorite;
 
-                playerControl.Player = player;             
+                playerControl.Player = player;
             }
+        }
+
+        private void cbSortLists_CheckedChanged(object sender, EventArgs e)
+        {
+            lbFavoritePlayers.Sorted = lbOtherPlayers.Sorted = cbSortLists.Checked;
         }
     }
 }

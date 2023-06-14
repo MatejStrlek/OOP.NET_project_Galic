@@ -41,6 +41,7 @@
             playerControl = new Controls.PlayerControl();
             btnToOtherPlayers = new Button();
             btnToFavoritePlayers = new Button();
+            cbSortLists = new CheckBox();
             SuspendLayout();
             // 
             // label1
@@ -101,7 +102,7 @@
             // 
             lbOtherPlayers.FormattingEnabled = true;
             lbOtherPlayers.ItemHeight = 15;
-            lbOtherPlayers.Location = new Point(573, 66);
+            lbOtherPlayers.Location = new Point(589, 66);
             lbOtherPlayers.Name = "lbOtherPlayers";
             lbOtherPlayers.Size = new Size(267, 289);
             lbOtherPlayers.TabIndex = 6;
@@ -129,7 +130,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(560, 48);
+            label4.Location = new Point(589, 48);
             label4.Name = "label4";
             label4.Size = new Size(80, 15);
             label4.TabIndex = 9;
@@ -139,12 +140,13 @@
             // 
             playerControl.Location = new Point(343, 361);
             playerControl.Name = "playerControl";
+            playerControl.Player = null;
             playerControl.Size = new Size(427, 250);
             playerControl.TabIndex = 10;
             // 
             // btnToOtherPlayers
             // 
-            btnToOtherPlayers.Location = new Point(492, 160);
+            btnToOtherPlayers.Location = new Point(500, 160);
             btnToOtherPlayers.Name = "btnToOtherPlayers";
             btnToOtherPlayers.Size = new Size(75, 42);
             btnToOtherPlayers.TabIndex = 11;
@@ -154,7 +156,7 @@
             // 
             // btnToFavoritePlayers
             // 
-            btnToFavoritePlayers.Location = new Point(492, 208);
+            btnToFavoritePlayers.Location = new Point(500, 208);
             btnToFavoritePlayers.Name = "btnToFavoritePlayers";
             btnToFavoritePlayers.Size = new Size(75, 42);
             btnToFavoritePlayers.TabIndex = 12;
@@ -162,11 +164,23 @@
             btnToFavoritePlayers.UseVisualStyleBackColor = true;
             btnToFavoritePlayers.Click += btnToFavoritePlayers_Click;
             // 
+            // cbSortLists
+            // 
+            cbSortLists.AutoSize = true;
+            cbSortLists.Location = new Point(517, 111);
+            cbSortLists.Name = "cbSortLists";
+            cbSortLists.Size = new Size(47, 19);
+            cbSortLists.TabIndex = 13;
+            cbSortLists.Text = "Sort";
+            cbSortLists.UseVisualStyleBackColor = true;
+            cbSortLists.CheckedChanged += cbSortLists_CheckedChanged;
+            // 
             // FemaleForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(851, 618);
+            ClientSize = new Size(868, 618);
+            Controls.Add(cbSortLists);
             Controls.Add(btnToFavoritePlayers);
             Controls.Add(btnToOtherPlayers);
             Controls.Add(playerControl);
@@ -202,5 +216,6 @@
         private Controls.PlayerControl playerControl;
         private Button btnToOtherPlayers;
         private Button btnToFavoritePlayers;
+        private CheckBox cbSortLists;
     }
 }

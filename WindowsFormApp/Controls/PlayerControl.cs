@@ -27,15 +27,26 @@ namespace WindowsFormApp.Controls
                 return player;
             }
             set
-            {
+            {              
                 player = value;
-                try
+
+                if (player != null)
                 {
-                    LoadPlayer();
+                    try
+                    {
+                        LoadPlayer();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show(ex.Message);
+                    tbName.Text = "";
+                    tbDressNumber.Text = "";
+                    tbPosition.Text = "";
+                    tbIsCaptain.Text = "";
                 }
             }
         }
