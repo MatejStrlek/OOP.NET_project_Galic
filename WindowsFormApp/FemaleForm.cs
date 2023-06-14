@@ -241,15 +241,15 @@ namespace WindowsFormApp
 
         private void lbFavoritePlayers_MouseDown(object sender, MouseEventArgs e)
         {
-            ShowOnPlayerControl(lbFavoritePlayers);
+            ShowOnPlayerControl(lbFavoritePlayers, true);
         }     
 
         private void lbOtherPlayers_MouseDown(object sender, MouseEventArgs e)
         {
-            ShowOnPlayerControl(lbOtherPlayers);
+            ShowOnPlayerControl(lbOtherPlayers, false);
         }
 
-        private void ShowOnPlayerControl(ListBox lbPlayers)
+        private void ShowOnPlayerControl(ListBox lbPlayers, bool isFavorite)
         {
             if (lbPlayers.SelectedItem != null)
             {
@@ -259,8 +259,9 @@ namespace WindowsFormApp
                 string playerName = playerParts[0];
                 List<Player> players = repo.GetFemalePlayers();
                 Player player = players.Find(player => player.Name == playerName);
+                player.IsFavorite = isFavorite;
 
-                playerControl.Player = player;               
+                playerControl.Player = player;             
             }
         }
     }

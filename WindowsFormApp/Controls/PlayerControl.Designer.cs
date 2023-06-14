@@ -159,6 +159,7 @@
             pbStar.SizeMode = PictureBoxSizeMode.StretchImage;
             pbStar.TabIndex = 3;
             pbStar.TabStop = false;
+            pbStar.Visible = false;
             // 
             // PlayerControl
             // 
