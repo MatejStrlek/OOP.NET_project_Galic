@@ -61,6 +61,21 @@ namespace WIndowsFormApp
         private void InitForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveLanguageAndGenderHere();
+
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                DialogResult result = MessageBox.Show(
+                    "Are you sure you want to exit?",
+                    "Exit",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                    );
+
+                if (result == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
+            }
         }
 
         private void btnOpenApp_Click(object sender, EventArgs e)

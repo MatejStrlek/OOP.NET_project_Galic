@@ -90,6 +90,13 @@ namespace WindowsFormApp
                     FAVORITE_FEMALE_TEAM_PATH);
 
             LoadFemalePlayersToClb();
+            ClearListBoxes();
+        }
+
+        private void ClearListBoxes()
+        {
+            lbFavoritePlayers.Items.Clear();
+            lbOtherPlayers.Items.Clear();
         }
 
         private void btnSaveFavoriteFemalePlayers_Click(object sender, EventArgs e)
@@ -213,40 +220,40 @@ namespace WindowsFormApp
             }
         }
 
-        private void btnToOtherPlayers_Click(object sender, EventArgs e)
-        {
-            MovePlayers(lbFavoritePlayers, lbOtherPlayers, lbFavoritePlayers.SelectedItems);
-        }
-
-        private void btnToFavoritePlayers_Click(object sender, EventArgs e)
-        {
-            MovePlayers(lbOtherPlayers, lbFavoritePlayers, lbOtherPlayers.SelectedItems);
-        }
-
-        private void MovePlayers(ListBox fromList, ListBox toList, IEnumerable selectedItems)
-        {
-            List<string> players = new();
-
-            foreach (string player in selectedItems)
-            {
-                players.Add(player);
-            }
-
-            foreach (string player in players)
-            {
-                fromList.Items.Remove(player);
-                toList.Items.Add(player);
-            }
-        }
+        private bool drag = false;
 
         private void lbFavoritePlayers_MouseDown(object sender, MouseEventArgs e)
         {
             ShowOnPlayerControl(lbFavoritePlayers, true);
+
+            if (lbFavoritePlayers.SelectedItem != null)
+            {
+                drag = true;
+                lbFavoritePlayers.DoDragDrop(lbFavoritePlayers.SelectedItem, DragDropEffects.Move);
+                lbFavoritePlayers.SelectedItem = null;
+            }
         }
 
         private void lbOtherPlayers_MouseDown(object sender, MouseEventArgs e)
         {
             ShowOnPlayerControl(lbOtherPlayers, false);
+
+            var x = 3;
+            if (lbFavoritePlayers.Items.Count == x)
+            {
+                lbFavoritePlayers.AllowDrop = false;
+            }
+            else
+            {
+                lbFavoritePlayers.AllowDrop = true;
+            }
+
+            if (lbOtherPlayers.SelectedItem != null)
+            {
+                drag = true;
+                lbOtherPlayers.DoDragDrop(lbOtherPlayers.SelectedItem, DragDropEffects.Move);
+                lbOtherPlayers.SelectedItem = null;
+            }
         }
 
         private void ShowOnPlayerControl(ListBox lbPlayers, bool isFavorite)
@@ -268,6 +275,79 @@ namespace WindowsFormApp
         private void cbSortLists_CheckedChanged(object sender, EventArgs e)
         {
             lbFavoritePlayers.Sorted = lbOtherPlayers.Sorted = cbSortLists.Checked;
+        }
+
+        private void lbOtherPlayers_DragEnter(object sender, DragEventArgs e)
+        {
+            if (drag && lbFavoritePlayers.SelectedItem != null)
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+        }
+
+        private void lbOtherPlayers_DragDrop(object sender, DragEventArgs e)
+        {
+            if (drag && lbFavoritePlayers.SelectedItem != null)
+            {
+                //List<string> favPlayers = repo.LoadFavoritePlayers(FAVORITE_FEMALE_PLAYERS_PATH).ToList();
+                string draggedPlayer = (string)e.Data.GetData(typeof(string));
+
+                lbOtherPlayers.Items.Add(draggedPlayer);
+                lbFavoritePlayers.Items.Remove(draggedPlayer);
+
+                SaveFavPlayersAfterDnD();
+            }
+        }
+
+        private void lbFavoritePlayers_DragEnter(object sender, DragEventArgs e)
+        {
+            if (drag && lbOtherPlayers.SelectedItem != null)
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+        }
+
+        private void lbFavoritePlayers_DragDrop(object sender, DragEventArgs e)
+        {
+            if (drag && lbOtherPlayers.SelectedItem != null)
+            {
+                string draggedPlayer = (string)e.Data.GetData(typeof(string));
+
+                lbOtherPlayers.Items.Remove(draggedPlayer);
+                lbFavoritePlayers.Items.Add(draggedPlayer);
+
+                SaveFavPlayersAfterDnD();
+            }
+        }
+
+        private void SaveFavPlayersAfterDnD()
+        {
+            List<string> players = new();
+
+            foreach (string player in lbFavoritePlayers.Items)
+            {
+                players.Add(player);
+            }
+
+            repo.SaveFavoritePlayers(players, FAVORITE_FEMALE_PLAYERS_PATH);
+        }
+
+        private void FemaleForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(e.CloseReason == CloseReason.UserClosing)
+            {
+                DialogResult result = MessageBox.Show(
+                    "Are you sure you want to exit?",
+                    "Exit",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                    );
+
+                if (result == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
+            }
         }
     }
 }
