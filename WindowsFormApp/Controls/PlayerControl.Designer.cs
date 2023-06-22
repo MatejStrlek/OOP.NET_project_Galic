@@ -139,6 +139,7 @@
             btnUploadPhoto.TabIndex = 1;
             btnUploadPhoto.Text = "Upload photo";
             btnUploadPhoto.UseVisualStyleBackColor = true;
+            btnUploadPhoto.Click += btnUploadPhoto_Click;
             // 
             // pbPlayer
             // 
