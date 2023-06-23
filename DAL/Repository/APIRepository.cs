@@ -287,15 +287,38 @@ namespace DAL.Repository
 
             jsonFemalePlayersEvents = GetWebRequestAPIPlayersAndVisitors(API_URL_FEMALE_PLAYERS + $"{GetFifaCodeFemale()}");
 
-            foreach (var game in jsonFemalePlayersEvents)
+            foreach (JObject game in jsonFemalePlayersEvents)
             {
+                JArray homeTeamEvents = (JArray)game["home_team_events"];
+                JArray awayTeamEvents = (JArray)game["away_team_events"];
+
                 if (game["home_team"].Value<string>("code") == GetFifaCodeFemale())
                 {
-                    femalePlayersEvents = ValidEvent((JArray)game["home_team_events"]);
+                    foreach (JObject playerEvent in homeTeamEvents)
+                    {
+                        if (playerEvent.Value<string>("type_of_event") == "yellow-card"
+                            || playerEvent.Value<string>("type_of_event") == "goal")
+                        {
+                            femalePlayersEvents.Add(new Event(
+                                playerEvent.Value<string>("type_of_event"),
+                                playerEvent.Value<string>("player")
+                            ));
+                        }
+                    }
                 }
                 else
                 {
-                    femalePlayersEvents = ValidEvent((JArray)game["away_team_events"]);
+                    foreach (JObject playerEvent in awayTeamEvents)
+                    {
+                        if (playerEvent.Value<string>("type_of_event") == "yellow-card"
+                            || playerEvent.Value<string>("type_of_event") == "goal")
+                        {
+                            femalePlayersEvents.Add(new Event(
+                                playerEvent.Value<string>("type_of_event"),
+                                playerEvent.Value<string>("player")
+                            ));
+                        }
+                    }
                 }
             }
 

@@ -295,7 +295,6 @@ namespace WindowsFormApp
         {
             if (drag && lbFavoritePlayers.SelectedItem != null)
             {
-                //List<string> favPlayers = repo.LoadFavoritePlayers(FAVORITE_FEMALE_PLAYERS_PATH).ToList();
                 string draggedPlayer = (string)e.Data.GetData(typeof(string));
 
                 lbOtherPlayers.Items.Add(draggedPlayer);
