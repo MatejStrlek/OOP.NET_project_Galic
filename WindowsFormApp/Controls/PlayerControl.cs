@@ -72,10 +72,17 @@ namespace WindowsFormApp.Controls
             if (File.Exists(Path.Combine(IMAGES_DIR_PATH, player.Name) + ".png"))
             {
                 pbPlayer.Image = Image.FromFile(Path.Combine(IMAGES_DIR_PATH, player.Name) + ".png");
+                btnUploadPhoto.Visible = false;
             }
-            else 
+            else if (File.Exists(Path.Combine(IMAGES_DIR_PATH, player.Name) + ".jpg"))
             { 
+                pbPlayer.Image = Image.FromFile(Path.Combine(IMAGES_DIR_PATH, player.Name) + ".jpg");
+                btnUploadPhoto.Visible = false;
+            }
+            else
+            {
                 pbPlayer.Image = Image.FromFile(DEFAULT_IMG_PATH);
+                btnUploadPhoto.Visible = true;
             }
         }
 

@@ -14,5 +14,7 @@ namespace DAL.Repository
         string[] LoadFavoriteTeam(string path);
         void SaveFavoritePlayers(List<string> players, string path);
         string[] LoadFavoritePlayers(string path);
+        List<Visitors> GetFemaleVisitorsStats();
+        List<Visitors> GetMaleVisitorsStats();
     }
 }

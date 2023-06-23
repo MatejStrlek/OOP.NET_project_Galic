@@ -45,6 +45,7 @@ namespace WindowsFormApp
         {
             LoadFemaleTeamsToCb();
             LoadFemalePlayersToClb();
+            pnlRangLists.Visible = false;
         }
 
         private void LoadFemaleTeamsToCb()
@@ -266,7 +267,11 @@ namespace WindowsFormApp
                 string playerName = playerParts[0];
                 List<Player> players = repo.GetFemalePlayers();
                 Player player = players.Find(player => player.Name == playerName);
-                player.IsFavorite = isFavorite;
+
+                if (player != null)
+                {
+                    player.IsFavorite = isFavorite;
+                }
 
                 playerControl.Player = player;
             }
@@ -334,7 +339,7 @@ namespace WindowsFormApp
 
         private void FemaleForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(e.CloseReason == CloseReason.UserClosing)
+            if (e.CloseReason == CloseReason.UserClosing)
             {
                 DialogResult result = MessageBox.Show(
                     "Are you sure you want to exit?",
@@ -348,6 +353,42 @@ namespace WindowsFormApp
                     e.Cancel = true;
                 }
             }
+        }
+
+        private void tsmiRangLists_Click(object sender, EventArgs e)
+        {
+            pnlRangLists.Visible = true;
+
+            try
+            {
+                lbPlayersRang.Items.Clear();
+                lbVisitorsRang.Items.Clear();
+
+                LoadPlayersStats();
+                LoadVisitorStats();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        private void tsmiTeamsAndPlayers_Click(object sender, EventArgs e)
+        {
+            pnlRangLists.Visible = false;
+        }
+
+        private void LoadPlayersStats()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void LoadVisitorStats()
+        {
+            repo.GetFemaleVisitorsStats()
+                .ForEach(
+                    x => lbVisitorsRang.Items.Add(x.GetInfoForRankList())
+                );
         }
     }
 }

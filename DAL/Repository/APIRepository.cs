@@ -234,5 +234,60 @@ namespace DAL.Repository
 
             return lines;
         }
+
+        public List<Visitors> GetFemaleVisitorsStats()
+        {
+            JArray jsonFemaleVisitorsStats = new();
+            List<Visitors> femaleVisitors = new();
+
+            jsonFemaleVisitorsStats = GetWebRequestAPIPlayers(API_URL_FEMALE_PLAYERS + $"{GetFifaCodeFemale()}");
+
+            foreach (var game in jsonFemaleVisitorsStats)
+            {
+                femaleVisitors.Add(new Visitors(
+                        game.Value<string>("location"),
+                        game.Value<int>("attendance"),
+                        game.Value<string>("home_team_country"),
+                        game.Value<string>("away_team_country")
+                    ));
+            }
+
+            return femaleVisitors
+                .OrderByDescending(x => x.Attendance)
+                .ToList();
+        }
+
+        public List<Visitors> GetMaleVisitorsStats()
+        {
+            throw new NotImplementedException();
+        }
+
+//        JArray jsonMalePlayersData = new();
+//        JArray jArrayForUnion = new();
+
+//        jsonMalePlayersData = GetWebRequestAPIPlayers(API_URL_MALE_PLAYERS + $"{GetFifaCodeMale()}");
+
+//        List<Player> malePlayers = new();
+
+//            if (jsonMalePlayersData[0]["home_team"].Value<string>("code") == GetFifaCodeMale())
+//            {
+//                jArrayForUnion = new JArray((jsonMalePlayersData[0]["home_team_statistics"]["starting_eleven"]).Union((JArray) jsonMalePlayersData[0]["home_team_statistics"]["substitutes"]));
+//            }
+//            else
+//            {
+//                jArrayForUnion = new JArray((jsonMalePlayersData[0]["away_team_statistics"]["starting_eleven"]).Union((JArray) jsonMalePlayersData[0]["away_team_statistics"]["substitutes"]));
+//            }
+
+//foreach (var player in jArrayForUnion)
+//{
+//    malePlayers.Add(new Player(
+//        player.Value<string>("name"),
+//        player.Value<int>("shirt_number"),
+//        player.Value<string>("position"),
+//        player.Value<bool>("captain")
+//        ));
+//}
+
+//return malePlayers;
     }
 }
