@@ -43,11 +43,12 @@
             menuStrip1 = new MenuStrip();
             tsmiTeamsAndPlayers = new ToolStripMenuItem();
             tsmiRangLists = new ToolStripMenuItem();
+            settingsToolStripMenuItem = new ToolStripMenuItem();
             pnlRangLists = new Panel();
-            lbPlayersRang = new ListBox();
-            lbVisitorsRang = new ListBox();
-            label5 = new Label();
             label6 = new Label();
+            label5 = new Label();
+            lbVisitorsRang = new ListBox();
+            lbPlayersRang = new ListBox();
             menuStrip1.SuspendLayout();
             pnlRangLists.SuspendLayout();
             SuspendLayout();
@@ -171,7 +172,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { tsmiTeamsAndPlayers, tsmiRangLists });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { tsmiTeamsAndPlayers, tsmiRangLists, settingsToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(868, 24);
@@ -192,6 +193,13 @@
             tsmiRangLists.Text = "Rank lists";
             tsmiRangLists.Click += tsmiRangLists_Click;
             // 
+            // settingsToolStripMenuItem
+            // 
+            settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            settingsToolStripMenuItem.Size = new Size(61, 20);
+            settingsToolStripMenuItem.Text = "Settings";
+            settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
+            // 
             // pnlRangLists
             // 
             pnlRangLists.Controls.Add(label6);
@@ -203,23 +211,14 @@
             pnlRangLists.Size = new Size(868, 584);
             pnlRangLists.TabIndex = 15;
             // 
-            // lbPlayersRang
+            // label6
             // 
-            lbPlayersRang.FormattingEnabled = true;
-            lbPlayersRang.ItemHeight = 15;
-            lbPlayersRang.Location = new Point(12, 77);
-            lbPlayersRang.Name = "lbPlayersRang";
-            lbPlayersRang.Size = new Size(403, 379);
-            lbPlayersRang.TabIndex = 0;
-            // 
-            // lbVisitorsRang
-            // 
-            lbVisitorsRang.FormattingEnabled = true;
-            lbVisitorsRang.ItemHeight = 15;
-            lbVisitorsRang.Location = new Point(448, 77);
-            lbVisitorsRang.Name = "lbVisitorsRang";
-            lbVisitorsRang.Size = new Size(408, 379);
-            lbVisitorsRang.TabIndex = 1;
+            label6.AutoSize = true;
+            label6.Location = new Point(448, 59);
+            label6.Name = "label6";
+            label6.Size = new Size(75, 15);
+            label6.TabIndex = 3;
+            label6.Text = "Visitors rang:";
             // 
             // label5
             // 
@@ -230,14 +229,23 @@
             label5.TabIndex = 2;
             label5.Text = "Players rang:";
             // 
-            // label6
+            // lbVisitorsRang
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(448, 59);
-            label6.Name = "label6";
-            label6.Size = new Size(75, 15);
-            label6.TabIndex = 3;
-            label6.Text = "Visitors rang:";
+            lbVisitorsRang.FormattingEnabled = true;
+            lbVisitorsRang.ItemHeight = 15;
+            lbVisitorsRang.Location = new Point(448, 77);
+            lbVisitorsRang.Name = "lbVisitorsRang";
+            lbVisitorsRang.Size = new Size(408, 379);
+            lbVisitorsRang.TabIndex = 1;
+            // 
+            // lbPlayersRang
+            // 
+            lbPlayersRang.FormattingEnabled = true;
+            lbPlayersRang.ItemHeight = 15;
+            lbPlayersRang.Location = new Point(12, 77);
+            lbPlayersRang.Name = "lbPlayersRang";
+            lbPlayersRang.Size = new Size(403, 379);
+            lbPlayersRang.TabIndex = 0;
             // 
             // FemaleForm
             // 
@@ -293,5 +301,6 @@
         private ListBox lbPlayersRang;
         private Label label6;
         private Label label5;
+        private ToolStripMenuItem settingsToolStripMenuItem;
     }
 }

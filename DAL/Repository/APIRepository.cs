@@ -1,6 +1,7 @@
 ﻿using DAL.DAO;
 using Newtonsoft.Json.Linq;
 using System.Net;
+using System.Xml.Schema;
 
 namespace DAL.Repository
 {
@@ -53,7 +54,7 @@ namespace DAL.Repository
             JArray jsonFemalePlayersData = new();
             JArray jArrayForUnion = new();
 
-            jsonFemalePlayersData = GetWebRequestAPIPlayers(API_URL_FEMALE_PLAYERS + $"{GetFifaCodeFemale()}");
+            jsonFemalePlayersData = GetWebRequestAPIPlayersAndVisitors(API_URL_FEMALE_PLAYERS + $"{GetFifaCodeFemale()}");
 
             List<Player> femalePlayers = new();
 
@@ -84,7 +85,7 @@ namespace DAL.Repository
             JArray jsonMalePlayersData = new();
             JArray jArrayForUnion = new();
 
-            jsonMalePlayersData = GetWebRequestAPIPlayers(API_URL_MALE_PLAYERS + $"{GetFifaCodeMale()}");
+            jsonMalePlayersData = GetWebRequestAPIPlayersAndVisitors(API_URL_MALE_PLAYERS + $"{GetFifaCodeMale()}");
 
             List<Player> malePlayers = new();
 
@@ -110,7 +111,7 @@ namespace DAL.Repository
             return malePlayers;
         }
 
-        private JArray GetWebRequestAPIPlayers(string API_URL)
+        private JArray GetWebRequestAPIPlayersAndVisitors(string API_URL)
         {
             try
             {
@@ -240,7 +241,7 @@ namespace DAL.Repository
             JArray jsonFemaleVisitorsStats = new();
             List<Visitors> femaleVisitors = new();
 
-            jsonFemaleVisitorsStats = GetWebRequestAPIPlayers(API_URL_FEMALE_PLAYERS + $"{GetFifaCodeFemale()}");
+            jsonFemaleVisitorsStats = GetWebRequestAPIPlayersAndVisitors(API_URL_FEMALE_PLAYERS + $"{GetFifaCodeFemale()}");
 
             foreach (var game in jsonFemaleVisitorsStats)
             {
@@ -259,35 +260,98 @@ namespace DAL.Repository
 
         public List<Visitors> GetMaleVisitorsStats()
         {
+            JArray jsonMaleVisitorsStats = new();
+            List<Visitors> maleVisitors = new();
+
+            jsonMaleVisitorsStats = GetWebRequestAPIPlayersAndVisitors(API_URL_MALE_PLAYERS + $"{GetFifaCodeMale()}");
+
+            foreach (var game in jsonMaleVisitorsStats)
+            {
+                maleVisitors.Add(new Visitors(
+                    game.Value<string>("location"),
+                    game.Value<int>("attendance"),
+                    game.Value<string>("home_team_country"),
+                    game.Value<string>("away_team_country")
+                 ));
+            }
+
+            return maleVisitors
+                .OrderByDescending(x => x.Attendance)
+                .ToList();
+        }
+
+        public List<Event> GetFemalePlayersEvents()
+        {
+            JArray jsonFemalePlayersEvents = new();
+            List<Event> femalePlayersEvents = new();
+
+            jsonFemalePlayersEvents = GetWebRequestAPIPlayersAndVisitors(API_URL_FEMALE_PLAYERS + $"{GetFifaCodeFemale()}");
+
+            foreach (var game in jsonFemalePlayersEvents)
+            {
+                if (game["home_team"].Value<string>("code") == GetFifaCodeFemale())
+                {
+                    femalePlayersEvents = ValidEvent((JArray)game["home_team_events"]);
+                }
+                else
+                {
+                    femalePlayersEvents = ValidEvent((JArray)game["away_team_events"]);
+                }
+            }
+
+            return femalePlayersEvents;
+        }
+
+        public List<Event> GetMalePlayersEvents()
+        {
             throw new NotImplementedException();
         }
 
-//        JArray jsonMalePlayersData = new();
-//        JArray jArrayForUnion = new();
+        private List<Event> ValidEvent(JToken playerEvent)
+        {
+            List<Event> validEvent = new();
 
-//        jsonMalePlayersData = GetWebRequestAPIPlayers(API_URL_MALE_PLAYERS + $"{GetFifaCodeMale()}");
+            foreach (var pEvent in playerEvent)
+            {
+                if (pEvent.Value<string>("type_of_event") == "yellow-card"
+                    || pEvent.Value<string>("type_of_event") == "goal")
+                {
+                    validEvent.Add(new Event(
+                        pEvent.Value<string>("type_of_event"),
+                        pEvent.Value<string>("player")
+                        ));
+                }
+            }
 
-//        List<Player> malePlayers = new();
+            return validEvent;
+        }
 
-//            if (jsonMalePlayersData[0]["home_team"].Value<string>("code") == GetFifaCodeMale())
-//            {
-//                jArrayForUnion = new JArray((jsonMalePlayersData[0]["home_team_statistics"]["starting_eleven"]).Union((JArray) jsonMalePlayersData[0]["home_team_statistics"]["substitutes"]));
-//            }
-//            else
-//            {
-//                jArrayForUnion = new JArray((jsonMalePlayersData[0]["away_team_statistics"]["starting_eleven"]).Union((JArray) jsonMalePlayersData[0]["away_team_statistics"]["substitutes"]));
-//            }
+        //        JArray jsonMalePlayersData = new();
+        //        JArray jArrayForUnion = new();
 
-//foreach (var player in jArrayForUnion)
-//{
-//    malePlayers.Add(new Player(
-//        player.Value<string>("name"),
-//        player.Value<int>("shirt_number"),
-//        player.Value<string>("position"),
-//        player.Value<bool>("captain")
-//        ));
-//}
+        //        jsonMalePlayersData = GetWebRequestAPIPlayers(API_URL_MALE_PLAYERS + $"{GetFifaCodeMale()}");
 
-//return malePlayers;
+        //        List<Player> malePlayers = new();
+
+        //            if (jsonMalePlayersData[0]["home_team"].Value<string>("code") == GetFifaCodeMale())
+        //            {
+        //                jArrayForUnion = new JArray((jsonMalePlayersData[0]["home_team_statistics"]["starting_eleven"]).Union((JArray) jsonMalePlayersData[0]["home_team_statistics"]["substitutes"]));
+        //            }
+        //            else
+        //            {
+        //                jArrayForUnion = new JArray((jsonMalePlayersData[0]["away_team_statistics"]["starting_eleven"]).Union((JArray) jsonMalePlayersData[0]["away_team_statistics"]["substitutes"]));
+        //            }
+
+        //foreach (var player in jArrayForUnion)
+        //{
+        //    malePlayers.Add(new Player(
+        //        player.Value<string>("name"),
+        //        player.Value<int>("shirt_number"),
+        //        player.Value<string>("position"),
+        //        player.Value<bool>("captain")
+        //        ));
+        //}
+
+        //return malePlayers;
     }
 }

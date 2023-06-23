@@ -16,5 +16,7 @@ namespace DAL.Repository
         string[] LoadFavoritePlayers(string path);
         List<Visitors> GetFemaleVisitorsStats();
         List<Visitors> GetMaleVisitorsStats();
+        List<Event> GetFemalePlayersEvents();
+        List<Event> GetMalePlayersEvents();
     }
 }

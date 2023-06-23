@@ -3,6 +3,7 @@ using DAL.Repository;
 using System.Collections;
 using System.IO;
 using WindowsFormApp.Controls;
+using WIndowsFormApp;
 
 namespace WindowsFormApp
 {
@@ -380,7 +381,22 @@ namespace WindowsFormApp
 
         private void LoadPlayersStats()
         {
-            throw new NotImplementedException();
+            repo.GetFemalePlayersEvents()
+                .GroupBy(e => e.Player)
+                .Select(g => new
+                {
+                    Player = g.Key,
+                    Goals = g.Count(e => e.TypeOfEvent == "goal"),
+                    YellowCards = g.Count(e => e.TypeOfEvent == "yellow-card")
+                })
+                .OrderByDescending(x => x.Goals)
+
+                .ToList()
+                .ForEach(
+                    p => lbPlayersRang.Items.Add(
+                        $"{p.Player} - {p.Goals} goals, {p.YellowCards} yellow cards"
+                    )
+                );
         }
 
         private void LoadVisitorStats()
@@ -388,6 +404,16 @@ namespace WindowsFormApp
             repo.GetFemaleVisitorsStats()
                 .ForEach(
                     x => lbVisitorsRang.Items.Add(x.GetInfoForRankList())
+                );
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                    "Restart application for changing settings",
+                    "Settings",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
                 );
         }
     }
