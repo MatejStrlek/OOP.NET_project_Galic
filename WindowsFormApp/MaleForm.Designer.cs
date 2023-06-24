@@ -99,8 +99,8 @@
             // tsmiRangLists
             // 
             tsmiRangLists.Name = "tsmiRangLists";
-            tsmiRangLists.Size = new Size(68, 20);
-            tsmiRangLists.Text = "Rank lists";
+            tsmiRangLists.Size = new Size(69, 20);
+            tsmiRangLists.Text = "Rang lists";
             tsmiRangLists.Click += tsmiRangLists_Click;
             // 
             // settingsToolStripMenuItem

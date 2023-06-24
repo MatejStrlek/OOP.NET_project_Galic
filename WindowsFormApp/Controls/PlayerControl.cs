@@ -1,4 +1,5 @@
 ﻿using DAL.DAO;
+using DAL.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,9 @@ namespace WindowsFormApp.Controls
     public partial class PlayerControl : UserControl
     {
         private Player player;
+
+        public static readonly IRepository repo = RepositoryFactory.GetRepository();
+        private readonly char SEPARATOR = ';';
         private static string IMAGES_DIR_PATH = Path.Combine(
             Directory.GetParent(
                 Directory.GetParent(
@@ -24,10 +28,57 @@ namespace WindowsFormApp.Controls
                 Directory.GetParent(
                     Directory.GetCurrentDirectory()).Parent.FullName)
             .Parent.FullName, "images\\defaultImage.png");
+        private static string LANGUAGE_PATH =
+            Path.Combine(
+                Directory.GetParent(
+                    Directory.GetParent(
+                        Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName,
+                "language_and_gender.txt");
 
         public PlayerControl()
         {
             InitializeComponent();
+            LoadLanguage();
+        }
+
+        private void LoadLanguage()
+        {
+            try
+            {
+                string[] lines = repo.LoadLanguageAndGender(LANGUAGE_PATH);
+
+                foreach (var line in lines)
+                {
+                    string[] details = line.Split(SEPARATOR);
+
+                    if (details.Length == 2)
+                    {
+                        if (details[0] == "English")
+                        {
+                            gbPlayer.Text = "Player";
+                            label1.Text = "Name";
+                            label2.Text = "Dress number";
+                            label3.Text = "Position";
+                            label4.Text = "Is captain";
+                            btnUploadPhoto.Text = "Upload photo";
+                        }
+                        else
+                        {
+                            gbPlayer.Text = "Igrac";
+                            label1.Text = "Ime";
+                            label2.Text = "Broj dresa";
+                            label3.Text = "Pozicija";
+                            label4.Text = "Kapetan?";
+                            btnUploadPhoto.Text = "Dodaj sliku";
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public Player Player

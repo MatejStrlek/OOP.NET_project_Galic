@@ -10,6 +10,7 @@ namespace WindowsFormApp
     public partial class FemaleForm : Form
     {
         public static readonly IRepository repo = RepositoryFactory.GetRepository();
+        private readonly char SEPARATOR = ';';
         private static string FAVORITE_FEMALE_TEAM_PATH =
             Path.Combine(
                 Directory.GetParent(
@@ -22,6 +23,12 @@ namespace WindowsFormApp
                     Directory.GetParent(
                         Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName,
                 "favorite_female_players.txt");
+        private static string LANGUAGE_PATH =
+            Path.Combine(
+                Directory.GetParent(
+                    Directory.GetParent(
+                        Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName,
+                "language_and_gender.txt");
 
         public FemaleForm()
         {
@@ -47,6 +54,59 @@ namespace WindowsFormApp
             LoadFemaleTeamsToCb();
             LoadFemalePlayersToClb();
             pnlRangLists.Visible = false;
+            LoadLanguage();
+        }
+
+        private void LoadLanguage()
+        {
+            try
+            {
+                string[] lines = repo.LoadLanguageAndGender(LANGUAGE_PATH);
+
+                foreach (string line in lines)
+                {
+                    string[] details = line.Split(SEPARATOR);
+
+                    if (details.Length == 2)
+                    {
+                        if (details[0] == "English")
+                        {
+                            label1.Text = "Favorite female team:";
+                            label2.Text = "Favorite players (choose max 3):";
+                            label3.Text = "Favorite player(s):";
+                            label4.Text = "Other players:";
+                            label5.Text = "Players rang:";
+                            label6.Text = "Visitors rang:";
+                            tsmiTeamsAndPlayers.Text = "Teams and players";
+                            tsmiRangLists.Text = "Rang lists";
+                            settingsToolStripMenuItem.Text = "Settings";
+                            btnFavoriteFemaleTeam.Text = "Add";
+                            btnSaveFavoriteFemalePlayers.Text = "Save favorite players";
+                            cbSortLists.Text = "Sort";
+                        }
+                        else
+                        {
+                            label1.Text = "Omiljeni zenski tim:";
+                            label2.Text = "Omiljeni igraci (max 3):";
+                            label3.Text = "Omiljeni igrac(i):";
+                            label4.Text = "Drugi igraci:";
+                            label5.Text = "Rang igraca:";
+                            label6.Text = "Rang posjetitelja:";
+                            tsmiTeamsAndPlayers.Text = "Timovi i igraci";
+                            tsmiRangLists.Text = "Rang liste";
+                            settingsToolStripMenuItem.Text = "Postavke";
+                            btnFavoriteFemaleTeam.Text = "Dodaj";
+                            btnSaveFavoriteFemalePlayers.Text = "Spremi omiljene igrace";
+                            cbSortLists.Text = "Sortiraj";
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private void LoadFemaleTeamsToCb()

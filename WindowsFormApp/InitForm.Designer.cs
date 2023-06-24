@@ -110,7 +110,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "InitForm";
-            Text = "FIFA world cup 2018.";
+            Text = "FIFA world CUP";
             FormClosing += InitForm_FormClosing;
             Load += InitForm_Load;
             ResumeLayout(false);

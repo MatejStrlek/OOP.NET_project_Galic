@@ -10,7 +10,7 @@ namespace WIndowsFormApp
             Path.Combine(
                 Directory.GetParent(
                     Directory.GetParent(
-                        Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName, 
+                        Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName,
                 "language_and_gender.txt");
         private const char SEPARATOR = ';';
 
@@ -50,6 +50,21 @@ namespace WIndowsFormApp
                         cbGender.SelectedItem = details[1];
                     }
                     else return;
+
+                    if (details[0] == "English")
+                    {
+                        label1.Text = "Choose language:";
+                        label2.Text = "Choose gender:";
+                        btnOpenApp.Text = "Open app";
+                        btnClose.Text = "Close";
+                    }
+                    else
+                    {
+                        label1.Text = "Odaberite jezik:";
+                        label2.Text = "Odaberite spol:";
+                        btnOpenApp.Text = "Otvori aplikaciju";
+                        btnClose.Text = "Zatvori";
+                    }
                 }
             }
             catch (Exception ex)
@@ -80,6 +95,8 @@ namespace WIndowsFormApp
 
         private void btnOpenApp_Click(object sender, EventArgs e)
         {
+            SaveLanguageAndGenderHere();
+
             if (cbGender.SelectedIndex == -1 || cbLanguage.SelectedIndex == -1)
             {
                 MessageBox.Show(
@@ -121,7 +138,7 @@ namespace WIndowsFormApp
             string gender = cbGender.SelectedItem.ToString();
 
             try
-            {              
+            {
                 repo.SaveLanguageAndGender(language, gender, PATH);
             }
             catch (Exception ex)
