@@ -369,24 +369,5 @@ namespace DAL.Repository
 
             return malePlayersEvents;
         }
-
-        private List<Event> ValidEvent(JToken playerEvent)
-        {
-            List<Event> validEvent = new();
-
-            foreach (var pEvent in playerEvent)
-            {
-                if (pEvent.Value<string>("type_of_event") == "yellow-card"
-                    || pEvent.Value<string>("type_of_event") == "goal")
-                {
-                    validEvent.Add(new Event(
-                        pEvent.Value<string>("type_of_event"),
-                        pEvent.Value<string>("player")
-                        ));
-                }
-            }
-
-            return validEvent;
-        }
     }
 }
