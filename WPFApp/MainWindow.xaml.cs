@@ -1,4 +1,5 @@
-﻿using DAL.Repository;
+﻿using DAL.DAO;
+using DAL.Repository;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,18 +25,18 @@ namespace WPFApp
     {
         public static readonly IRepository repo = RepositoryFactory.GetRepository();
         private readonly char SEPARATOR = ';';
+        private static string FAVORITE_MALE_TEAM_PATH =
+            System.IO.Path.Combine(
+                Directory.GetParent(
+                    Directory.GetParent(
+                        Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName,
+                "favorite_male_team.txt");
         private static string FAVORITE_FEMALE_TEAM_PATH =
             System.IO.Path.Combine(
                 Directory.GetParent(
                     Directory.GetParent(
                         Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName,
-                "favorite_female_team.txt");
-        private static string FAVORITE_FEMALE_PLAYERS_PATH =
-            System.IO.Path.Combine(
-                Directory.GetParent(
-                    Directory.GetParent(
-                        Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName,
-                "favorite_female_players.txt");
+                "favorite_female_team.txt");       
         private static string LANGUAGE_AND_GENDER_PATH =
             System.IO.Path.Combine(
                 Directory.GetParent(
@@ -77,10 +78,9 @@ namespace WPFApp
                     else return;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -136,7 +136,47 @@ namespace WPFApp
 
         private void btnSaveFavouriteTeam_Click(object sender, RoutedEventArgs e)
         {
+            SaveFavoriteTeam();
+        }
 
+        private void SaveFavoriteTeam()
+        {
+            if (cbFavouriteTeam.SelectedIndex == -1)
+                MessageBox.Show(
+                    "Please select a team!",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            else
+            {
+                try
+                {
+                    string[] lines = repo.LoadLanguageAndGender(LANGUAGE_AND_GENDER_PATH);
+
+                    foreach (string line in lines)
+                    {
+                        string[] details = line.Split(SEPARATOR);
+
+                        if (details[1] == "Male")
+                        {
+                            repo.SaveFavoriteTeam(
+                                cbFavouriteTeam.SelectedItem.ToString(),
+                                FAVORITE_MALE_TEAM_PATH);
+                        }
+                        else
+                        {
+                            repo.SaveFavoriteTeam(
+                                cbFavouriteTeam.SelectedItem.ToString(),
+                                FAVORITE_FEMALE_TEAM_PATH
+                                );
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
         private void btnSettings_Click_1(object sender, RoutedEventArgs e)
@@ -146,6 +186,108 @@ namespace WPFApp
 
             SaveLanguageAndGenderHere();
             SaveScreenSizeHere();
+            LoadTeamsInCbHere();
+            LoadFavoriteTeam();
+        }
+
+        private void LoadFavoriteTeam()
+        {
+            if (cbGender.SelectedItem == "Male")
+            {
+                try
+                {
+                    string[] line = repo.LoadFavoriteTeam(FAVORITE_MALE_TEAM_PATH);
+
+                    if (line.Length == 0)
+                    {
+                        cbFavouriteTeam.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        string selectedTeam = line[0];
+
+                        var selectedItem
+                            = cbFavouriteTeam.Items.Cast<string>()
+                            .Where(x => x == selectedTeam)
+                            .FirstOrDefault();
+
+                        if (selectedItem != null)
+                        {
+                            cbFavouriteTeam.SelectedItem = selectedItem;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+            {
+                try
+                {
+                    string[] line = repo.LoadFavoriteTeam(FAVORITE_FEMALE_TEAM_PATH);
+
+                    if (line.Length == 0)
+                    {
+                        cbFavouriteTeam.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        string selectedTeam = line[0];
+
+                        var selectedItem
+                            = cbFavouriteTeam.Items.Cast<string>()
+                            .Where(x => x == selectedTeam)
+                            .FirstOrDefault();
+
+                        if (selectedItem != null)
+                        {
+                            cbFavouriteTeam.SelectedItem = selectedItem;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void LoadTeamsInCbHere()
+        {
+            if (cbGender.SelectedItem == "Male")
+            {
+                try
+                {
+                    List<Team> teams = repo.GetMaleTeams();
+
+                    foreach (var team in teams)
+                    {
+                        cbFavouriteTeam.Items.Add(team.GetCountryAndCode());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+            {
+                try
+                {
+                    List<Team> teams = repo.GetFemaleTeams();
+
+                    foreach (var team in teams)
+                    {
+                        cbFavouriteTeam.Items.Add(team.GetCountryAndCode());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
         private void SaveScreenSizeHere()
