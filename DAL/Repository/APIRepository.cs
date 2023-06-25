@@ -369,5 +369,18 @@ namespace DAL.Repository
 
             return malePlayersEvents;
         }
+
+        public void SaveScreenSize(string screenSize, string path)
+            => File.WriteAllText(path, screenSize);
+
+        public string[] LoadScreenSize(string path)
+        {
+            if (!File.Exists(path))
+                File.Create(path).Close();
+
+            string[] lines = File.ReadAllLines(path);
+
+            return lines;
+        }
     }
 }

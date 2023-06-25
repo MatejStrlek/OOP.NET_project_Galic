@@ -18,5 +18,7 @@ namespace DAL.Repository
         List<Visitors> GetMaleVisitorsStats();
         List<Event> GetFemalePlayersEvents();
         List<Event> GetMalePlayersEvents();
+        void SaveScreenSize(string screenSize, string path);
+        string[] LoadScreenSize(string path);
     }
 }
