@@ -20,5 +20,7 @@ namespace DAL.Repository
         List<Event> GetMalePlayersEvents();
         void SaveScreenSize(string screenSize, string path);
         string[] LoadScreenSize(string path);
+        List<Team> GetFemaleEnemyTeams(Team team);
+        List<Team> GetMaleEnemyTeams(Team team);
     }
 }

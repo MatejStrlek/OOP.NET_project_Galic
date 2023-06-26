@@ -137,6 +137,9 @@ namespace WPFApp
         private void btnSaveFavouriteTeam_Click(object sender, RoutedEventArgs e)
         {
             SaveFavoriteTeam();
+
+            AppPage appPage = new();
+            appPage.Show();
         }
 
         private void SaveFavoriteTeam()

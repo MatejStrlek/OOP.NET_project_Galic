@@ -27,7 +27,7 @@ namespace DAL.DAO
         public int GroupId { get; set; }
 
         [JsonProperty(PropertyName = "group_letter")]
-        public string GroupLetter { get; set; }
+        public char GroupLetter { get; set; }
 
         [JsonProperty(PropertyName = "wins")]
         public int Wins { get; set; }
@@ -55,7 +55,7 @@ namespace DAL.DAO
 
         public Team(int id, string country, 
             string alternateName, string fifaCode, 
-            int groupId, string groupLetter, 
+            int groupId, char groupLetter, 
             int wins, int draws, int losses, 
             int gamesPlayed, int points, int goalsFor, 
             int goalsAgainst, int goalDifferential)

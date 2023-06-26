@@ -1,5 +1,6 @@
 ﻿using DAL.DAO;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Net;
 using System.Xml.Schema;
 
@@ -381,6 +382,115 @@ namespace DAL.Repository
             string[] lines = File.ReadAllLines(path);
 
             return lines;
+        }
+
+        public List<Team> GetFemaleEnemyTeams(Team team)
+        {
+            JArray jsonFemaleEnemyTeams = new();
+            JArray jsonFemaleTeamsData = new();
+            List<string> teamsList = new();
+            List<Team> enemyTeams = new List<Team>();
+
+            jsonFemaleEnemyTeams = GetWebRequestAPIEnemyTeamsWPF(API_URL_FEMALE_PLAYERS + $"{GetFifaCodeFemale()}");
+
+            foreach (var game in jsonFemaleEnemyTeams)
+            {
+                if (game.Value<string>("home_team_country") == team.Country)
+                    teamsList.Add(game.Value<string>("away_team_country"));
+                else
+                    teamsList.Add(game.Value<string>("home_team_country"));
+            }
+
+            jsonFemaleTeamsData = GetWebRequestAPIEnemyTeamsWPF(API_URL_FEMALE_TEAMS);
+
+            foreach (var teamName in teamsList)
+            {
+                foreach (var teamData in jsonFemaleTeamsData)
+                {
+                    if (teamData.Value<string>("country") == teamName)
+                    {
+                        enemyTeams.Add(new Team(
+                            teamData.Value<int>("id"),
+                            teamData.Value<string>("country"),
+                            teamData.Value<string>("alternate_name"),
+                            teamData.Value<string>("fifa_code"),
+                            teamData.Value<int>("group_id"),
+                            teamData.Value<char>("group_letter"),
+                            teamData.Value<int>("wins"),
+                            teamData.Value<int>("draws"),
+                            teamData.Value<int>("losses"),
+                            teamData.Value<int>("games_played"),
+                            teamData.Value<int>("points"),
+                            teamData.Value<int>("goals_for"),
+                            teamData.Value<int>("goals_against"),
+                            teamData.Value<int>("goal_differential")));
+                    }
+                }
+            }
+
+            return enemyTeams;
+        }
+
+        public List<Team> GetMaleEnemyTeams(Team team)
+        {
+            JArray jsonMaleEnemyTeams = new();
+            JArray jsonMaleTeamsData = new();
+            List<string> teamsList = new();
+            List<Team> enemyTeams = new List<Team>();
+
+            jsonMaleEnemyTeams = GetWebRequestAPIEnemyTeamsWPF(API_URL_MALE_PLAYERS + $"{GetFifaCodeMale()}");
+
+            foreach (var game in jsonMaleEnemyTeams)
+            {
+                if (game.Value<string>("home_team_country") == team.Country)
+                    teamsList.Add(game.Value<string>("away_team_country"));
+                else
+                    teamsList.Add(game.Value<string>("home_team_country"));
+            }
+
+            jsonMaleTeamsData = GetWebRequestAPIEnemyTeamsWPF(API_URL_MALE_TEAMS);
+
+            foreach (var teamName in teamsList)
+            {
+                foreach (var teamData in jsonMaleTeamsData)
+                {
+                    if (teamData.Value<string>("country") == teamName)
+                    {
+                        enemyTeams.Add(new Team(
+                            teamData.Value<int>("id"),
+                            teamData.Value<string>("country"),
+                            teamData.Value<string>("alternate_name"),
+                            teamData.Value<string>("fifa_code"),
+                            teamData.Value<int>("group_id"),
+                            teamData.Value<char>("group_letter"),
+                            teamData.Value<int>("wins"),
+                            teamData.Value<int>("draws"),
+                            teamData.Value<int>("losses"),
+                            teamData.Value<int>("games_played"),
+                            teamData.Value<int>("points"),
+                            teamData.Value<int>("goals_for"),
+                            teamData.Value<int>("goals_against"),
+                            teamData.Value<int>("goal_differential")));
+                    }
+                }
+            }
+
+            return enemyTeams;
+        }
+
+        private JArray GetWebRequestAPIEnemyTeamsWPF(string API_URL)
+        {
+            try
+            {
+                var client = new HttpClient();
+                var content = (client.GetAsync(API_URL).Result).Content.ReadAsStringAsync().Result;
+                JArray jsonData = JArray.Parse(content);
+                return jsonData;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
