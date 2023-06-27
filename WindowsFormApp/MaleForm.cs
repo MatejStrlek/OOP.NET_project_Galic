@@ -103,7 +103,7 @@ namespace WindowsFormApp
             {
                 MessageBox.Show(
                     "Error while loading language file!",
-                    "Error",MessageBoxButtons.OK,
+                    "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                     );
             }

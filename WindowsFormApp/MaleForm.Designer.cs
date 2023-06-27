@@ -42,8 +42,8 @@
             lbFavoritePlayers = new ListBox();
             lbOtherPlayers = new ListBox();
             label4 = new Label();
-            cbSortLists = new CheckBox();
             playerControl = new Controls.PlayerControl();
+            cbSortLists = new CheckBox();
             pnlRangLists = new Panel();
             lbVisitorsRang = new ListBox();
             lbPlayersRang = new ListBox();
@@ -181,6 +181,14 @@
             label4.TabIndex = 10;
             label4.Text = "Other players:";
             // 
+            // playerControl
+            // 
+            playerControl.Location = new Point(343, 361);
+            playerControl.Name = "playerControl";
+            playerControl.Player = null;
+            playerControl.Size = new Size(427, 250);
+            playerControl.TabIndex = 10;
+            // 
             // cbSortLists
             // 
             cbSortLists.AutoSize = true;
@@ -191,14 +199,6 @@
             cbSortLists.Text = "Sort";
             cbSortLists.UseVisualStyleBackColor = true;
             cbSortLists.CheckedChanged += cbSortLists_CheckedChanged;
-            // 
-            // playerControl
-            // 
-            playerControl.Location = new Point(363, 363);
-            playerControl.Name = "playerControl";
-            playerControl.Player = null;
-            playerControl.Size = new Size(425, 245);
-            playerControl.TabIndex = 12;
             // 
             // pnlRangLists
             // 
@@ -253,9 +253,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(868, 612);
             Controls.Add(pnlRangLists);
-            Controls.Add(playerControl);
             Controls.Add(cbSortLists);
             Controls.Add(label4);
+            Controls.Add(playerControl);
             Controls.Add(lbOtherPlayers);
             Controls.Add(lbFavoritePlayers);
             Controls.Add(label3);
@@ -295,8 +295,8 @@
         private ListBox lbFavoritePlayers;
         private ListBox lbOtherPlayers;
         private Label label4;
-        private CheckBox cbSortLists;
         private Controls.PlayerControl playerControl;
+        private CheckBox cbSortLists;
         private Panel pnlRangLists;
         private Label label5;
         private Label label6;
