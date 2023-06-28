@@ -13,12 +13,6 @@ namespace DAL.Repository
         private const string API_URL_MALE_PLAYERS = "https://worldcup-vua.nullbit.hr/men/matches/country?fifa_code=";
         private const string API_URL_FEMALE_PLAYERS = "https://worldcup-vua.nullbit.hr/women/matches/country?fifa_code=";
 
-        private static string LANGUAGE_AND_GENDER_PATH =
-            Path.Combine(
-                Directory.GetParent(
-                    Directory.GetParent(
-                        Directory.GetCurrentDirectory()).Parent.FullName).Parent.FullName,
-                "language_and_gender.txt");
         private static string FAVORITE_MALE_TEAM_PATH = 
             Path.Combine(
                 Directory.GetParent(
@@ -491,6 +485,52 @@ namespace DAL.Repository
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public string GetFemaleResult(Team firstTeam, Team secondTeam)
+        {
+            JArray jsonFemaleResults = new();
+
+            jsonFemaleResults = GetWebRequestAPIEnemyTeamsWPF(API_URL_FEMALE_PLAYERS + $"{GetFifaCodeFemale()}");
+
+            foreach (var game in jsonFemaleResults)
+            {
+                if (game.Value<string>("home_team_country") == firstTeam.Country
+                                       && game.Value<string>("away_team_country") == secondTeam.Country)
+                    return $"{(game["home_team"]).Value<string>("goals")} : {(game["away_team"]).Value<string>("goals")}";
+
+                else if (game.Value<string>("home_team_country") == secondTeam.Country
+                                       && game.Value<string>("away_team_country") == firstTeam.Country)
+                    return $"{(game["away_team"]).Value<string>("goals")} : {(game["home_team"]).Value<string>("goals")}";
+
+                else
+                    continue;
+            }
+
+            return "0 : 0";
+        }
+
+        public string GetMaleResult(Team firstTeam, Team secondTeam)
+        {
+            JArray jsonMaleResults = new();
+
+            jsonMaleResults = GetWebRequestAPIEnemyTeamsWPF(API_URL_MALE_PLAYERS + $"{GetFifaCodeMale()}");
+
+            foreach (var game in jsonMaleResults)
+            {
+                if (game.Value<string>("home_team_country") == firstTeam.Country
+                                       && game.Value<string>("away_team_country") == secondTeam.Country)
+                    return $"{(game["home_team"]).Value<string>("goals")} : {(game["away_team"]).Value<string>("goals")}";
+
+                else if (game.Value<string>("home_team_country") == secondTeam.Country
+                                       && game.Value<string>("away_team_country") == firstTeam.Country)
+                    return $"{(game["away_team"]).Value<string>("goals")} : {(game["home_team"]).Value<string>("goals")}";
+
+                else
+                    continue;
+            }
+
+            return "0 : 0";
         }
     }
 }

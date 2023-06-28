@@ -22,5 +22,7 @@ namespace DAL.Repository
         string[] LoadScreenSize(string path);
         List<Team> GetFemaleEnemyTeams(Team team);
         List<Team> GetMaleEnemyTeams(Team team);
+        string GetFemaleResult(Team firstTeam, Team secondTeam);
+        string GetMaleResult(Team firstTeam, Team secondTeam);
     }
 }

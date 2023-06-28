@@ -192,7 +192,35 @@ namespace WPFApp
 
         private void cbSecondTeam_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (cbSecondTeam.SelectedIndex == -1)
+            {
+                return;
+            }
 
+            try
+            {
+                string[] lines = repo.LoadLanguageAndGender(LANGUAGE_AND_GENDER_PATH);
+
+                foreach (string line in lines)
+                {
+                    string[] details = line.Split(SEPARATOR);
+
+                    if (details[1] == "Female")
+                    {
+                        lblResults.Content
+                            = repo.GetFemaleResult(GetFirstFemaleTeam(), GetSecondFemaleTeam());
+                    }
+                    else
+                    {
+                        lblResults.Content
+                            = repo.GetMaleResult(GetFirstMaleTeam(), GetSecondMaleTeam());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnFirstTeamDetails_Click(object sender, RoutedEventArgs e)
