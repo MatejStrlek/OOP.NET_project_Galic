@@ -1,0 +1,46 @@
+﻿<Window x:Class="WPFApp.TeamDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFApp"
+        mc:Ignorable="d"
+        Title="TeamDetails" Height="400" Width="300">
+    <Grid x:Name="gTeamDetails">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*">
+            </ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Team Name:"></Label>
+        <Label x:Name="lblTeamName" Content="-" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <Label Grid.Row="1" Grid.Column="0" Content="FIFA Code:"></Label>
+        <Label x:Name="lblFifaCode" Content="-" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1"></Label>
+        <Label Grid.Row="2" Grid.Column="0" Content="Played games:"></Label>
+        <Label x:Name="lblPlayedGames" Content="-" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2"></Label>
+        <Label Grid.Row="3" Grid.Column="0" Content="Won games:"></Label>
+        <Label x:Name="lblWonGames" Content="-" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3"></Label>
+        <Label Grid.Row="4" Grid.Column="0" Content="Lost games:"></Label>
+        <Label x:Name="lblLostGames" Content="-" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4"></Label>
+        <Label Grid.Row="5" Grid.Column="0" Content="Draw games:"></Label>
+        <Label x:Name="lblDrawGames" Content="-" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5"></Label>
+        <Label Grid.Row="6" Grid.Column="0" Content="Scored goals:"></Label>
+        <Label x:Name="lblScoredGoals" Content="-" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="6"></Label>
+        <Label Grid.Row="7" Grid.Column="0" Content="Received goals:"></Label>
+        <Label x:Name="lblConcededGoals" Content="-" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7"></Label>
+        <Label Grid.Row="8" Grid.Column="0" Content="Goals differential:"></Label>
+        <Label x:Name="lblGoalDifferential" Content="-" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="8"></Label>
+    </Grid>
+</Window>

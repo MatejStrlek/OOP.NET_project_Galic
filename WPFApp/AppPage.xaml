@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFApp"
         mc:Ignorable="d"
-        Title="AppPage" Height="601" Width="604" Loaded="Window_Loaded">
+        Title="AppPage" Height="601" Width="604" Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -21,8 +21,8 @@
         <Label Grid.Column="2" Content="Second team" HorizontalAlignment="Center" Margin="0,37,0,0" VerticalAlignment="Top" Height="29" Width="82"/>
         <ComboBox x:Name="cbFirstTeam" HorizontalAlignment="Left" Margin="19,93,0,0" VerticalAlignment="Top" Width="120" Height="22" SelectionChanged="cbFirstTeam_SelectionChanged"/>
         <ComboBox x:Name="cbSecondTeam" Grid.Column="2" HorizontalAlignment="Center" Margin="0,93,0,0" VerticalAlignment="Top" Width="120" Height="22" SelectionChanged="cbSecondTeam_SelectionChanged" />
-        <Button x:Name="btnFirstTeamDetails" Content="Detalji ekipe 1" HorizontalAlignment="Left" Margin="19,155,0,0" VerticalAlignment="Top" Foreground="Black" Width="120" Click="btnFirstTeamDetails_Click" />
-        <Button x:Name="btnSecondTeamDetails" Grid.Column="2" Content="Detalji ekipe 2" HorizontalAlignment="Center" Margin="0,155,0,0" VerticalAlignment="Top" Width="120" Click="btnSecondTeamDetails_Click" />
+        <Button x:Name="btnFirstTeamDetails" Content="First team details" HorizontalAlignment="Left" Margin="19,155,0,0" VerticalAlignment="Top" Foreground="Black" Width="120" Click="btnFirstTeamDetails_Click" />
+        <Button x:Name="btnSecondTeamDetails" Grid.Column="2" Content="Second team details" HorizontalAlignment="Center" Margin="0,155,0,0" VerticalAlignment="Top" Width="120" Click="btnSecondTeamDetails_Click" />
         <Label x:Name="lblResults" Grid.Column="1" Content="0:0" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" Height="58" Width="82" Margin="0,117,0,0"/>
         <Button x:Name="btnSettings" Grid.Column="1" Content="Settings" HorizontalAlignment="Center" Margin="0,95,0,0" VerticalAlignment="Top" Width="114" Click="btnSettings_Click"/>
         <Image x:Name="imgField" Grid.Row="1" Grid.ColumnSpan="3" Source="/footbal_field.jpg" Width="605"/>

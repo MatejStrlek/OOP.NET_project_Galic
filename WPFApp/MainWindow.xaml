@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="SettingsWPFWindow_Loaded">
+        Title="MainWindow" Height="450" Width="800" Loaded="SettingsWPFWindow_Loaded" Closing="SettingsWPFWindow_Closing">
     <Grid Margin="10" Name="mainGrid">
-        <StackPanel x:Name="spSettings" VerticalAlignment="Center" HorizontalAlignment="Center" Width="454" Height="214">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="97*"/>
+            <ColumnDefinition Width="98*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel x:Name="spSettings" VerticalAlignment="Center" HorizontalAlignment="Left" Width="454" Height="214" Grid.ColumnSpan="2" Margin="163,0,0,0">
             <Label Content="Choose language:" HorizontalAlignment="Center"/>
             <ComboBox x:Name="cbLanguage" Width="174" RenderTransformOrigin="0.5,0.5">
                 <ComboBox.RenderTransform>
@@ -28,8 +32,8 @@
             <Button Content="Save" x:Name="btnSettings" RenderTransformOrigin="0.515,-0.148" Height="35" HorizontalAlignment="Center" Width="194" Click="btnSettings_Click_1"/>
         </StackPanel>
 
-        <StackPanel x:Name="spFavouriteTeam" VerticalAlignment="Center" HorizontalAlignment="Center" Width="338" Height="132" 
-                    Visibility="Collapsed">
+        <StackPanel x:Name="spFavouriteTeam" VerticalAlignment="Center" HorizontalAlignment="Left" Width="338" Height="132" 
+                    Visibility="Collapsed" Grid.ColumnSpan="2" Margin="221,0,0,0">
             <Label Content="Favorite team:"/>
             <ComboBox x:Name="cbFavouriteTeam"/>
             <Button Content="Save" Margin="0,24,0,-60" x:Name="btnSaveFavouriteTeam" Click="btnSaveFavouriteTeam_Click" />

@@ -197,12 +197,82 @@ namespace WPFApp
 
         private void btnFirstTeamDetails_Click(object sender, RoutedEventArgs e)
         {
+            if (cbFirstTeam.SelectedIndex == -1)
+            {
+                MessageBox.Show(
+                    "Please select a team",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                    );
 
+                return;
+            }
+
+            try
+            {
+                string[] lines = repo.LoadLanguageAndGender(LANGUAGE_AND_GENDER_PATH);
+
+                foreach (string line in lines)
+                {
+                    string[] details = line.Split(SEPARATOR);
+
+                    if (details[1] == "Female")
+                    {
+                        TeamDetails teamDetails = new TeamDetails(GetFirstFemaleTeam());
+                        teamDetails.Show();
+                    }
+                    else
+                    {
+                        TeamDetails teamDetails = new TeamDetails(GetFirstMaleTeam());
+                        teamDetails.Show();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnSecondTeamDetails_Click(object sender, RoutedEventArgs e)
         {
+            if (cbFirstTeam.SelectedIndex == -1)
+            {
+                MessageBox.Show(
+                    "Please select a team",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                    );
 
+                return;
+            }
+
+            try
+            {
+                string[] lines = repo.LoadLanguageAndGender(LANGUAGE_AND_GENDER_PATH);
+
+                foreach (string line in lines)
+                {
+                    string[] details = line.Split(SEPARATOR);
+
+                    if (details[1] == "Female")
+                    {
+                        TeamDetails teamDetails = new TeamDetails(GetSecondFemaleTeam());
+                        teamDetails.Show();
+                    }
+                    else
+                    {
+                        TeamDetails teamDetails = new TeamDetails(GetSecondMaleTeam());
+                        teamDetails.Show();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
@@ -273,6 +343,31 @@ namespace WPFApp
             return null;
         }
 
+        private Team GetSecondFemaleTeam()
+        {
+            try
+            {
+                if (cbSecondTeam.SelectedItem != null)
+                {
+                    List<Team> teams = repo.GetFemaleTeams();
+
+                    foreach (Team team in teams)
+                    {
+                        if (team.GetCountryAndCode() == cbSecondTeam.SelectedItem.ToString())
+                        {
+                            return team;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return null;
+        }
+
         private Team GetFirstMaleTeam()
         {
             try
@@ -296,6 +391,46 @@ namespace WPFApp
             }
 
             return null;
+        }
+
+        private Team GetSecondMaleTeam()
+        {
+            try
+            {
+                if (cbSecondTeam.SelectedItem != null)
+                {
+                    List<Team> teams = repo.GetMaleTeams();
+
+                    foreach (Team team in teams)
+                    {
+                        if (team.GetCountryAndCode() == cbSecondTeam.SelectedItem.ToString())
+                        {
+                            return team;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return null;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show(
+                                "Are you sure you want to exit?",
+                                "Exit",
+                                MessageBoxButton.YesNo,
+                                MessageBoxImage.Question
+                                );
+            
+            if (result == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

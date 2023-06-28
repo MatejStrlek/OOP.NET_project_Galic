@@ -329,5 +329,20 @@ namespace WPFApp
                 File.Create(SCREEN_SIZE_PATH).Close();
             }        
         }
+
+        private void SettingsWPFWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show(
+                                "Are you sure you want to exit?",
+                                "Exit",
+                                MessageBoxButton.YesNo,
+                                MessageBoxImage.Question
+                                );
+
+            if (result == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }
