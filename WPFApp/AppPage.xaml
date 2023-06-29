@@ -17,8 +17,8 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Label Content="First team" HorizontalAlignment="Left" Margin="47,37,0,0" VerticalAlignment="Top" Height="26" Width="64"/>
-        <Label Grid.Column="2" Content="Second team" HorizontalAlignment="Center" Margin="0,37,0,0" VerticalAlignment="Top" Height="29" Width="82"/>
+        <Label x:Name="lblFirstTeam" Content="First team" HorizontalAlignment="Left" Margin="47,37,0,0" VerticalAlignment="Top" Height="26" Width="64"/>
+        <Label x:Name="lblSecondTeam" Grid.Column="2" Content="Second team" HorizontalAlignment="Center" Margin="0,37,0,0" VerticalAlignment="Top" Height="29" Width="82"/>
         <ComboBox x:Name="cbFirstTeam" HorizontalAlignment="Left" Margin="19,93,0,0" VerticalAlignment="Top" Width="120" Height="22" SelectionChanged="cbFirstTeam_SelectionChanged"/>
         <ComboBox x:Name="cbSecondTeam" Grid.Column="2" HorizontalAlignment="Center" Margin="0,93,0,0" VerticalAlignment="Top" Width="120" Height="22" SelectionChanged="cbSecondTeam_SelectionChanged" />
         <Button x:Name="btnFirstTeamDetails" Content="First team details" HorizontalAlignment="Left" Margin="19,155,0,0" VerticalAlignment="Top" Foreground="Black" Width="120" Click="btnFirstTeamDetails_Click" />

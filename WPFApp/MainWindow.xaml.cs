@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -53,12 +54,52 @@ namespace WPFApp
         public MainWindow()
         {
             InitializeComponent();
+            WriteLanguage();
             LoadcbGender();
             LoadcbLanguage();
             LoadcbScreenSize();
             Init();
             LoadLanguageAndGender();
             LoadScreenSize();
+        }
+
+        private void WriteLanguage()
+        {
+            if (File.Exists(LANGUAGE_AND_GENDER_PATH))
+            {
+                try
+                {
+                    string[] lines = repo.LoadLanguageAndGender(LANGUAGE_AND_GENDER_PATH);
+
+                    foreach (var line in lines)
+                    {
+                        string[] details = line.Split(SEPARATOR);
+
+                        if (details[0] == "English")
+                        {
+                            lblChooseLanguage.Content = "Choose language:";
+                            lblChooseGender.Content = "Choose gender:";
+                            lblScreenSize.Content = "Screen size:";
+                            btnSettings.Content = "Save";
+                            lblFavoriteTeam.Content = "Favorite team:";
+                            btnSaveFavouriteTeam.Content = "Save";
+                        }
+                        else
+                        {
+                            lblChooseLanguage.Content = "Odaberite jezik:";
+                            lblChooseGender.Content = "Odaberite spol:";
+                            lblScreenSize.Content = "Velicina ekrana:";
+                            btnSettings.Content = "Spremi";
+                            lblFavoriteTeam.Content = "Omiljena ekipa:";
+                            btnSaveFavouriteTeam.Content = "Spremi";
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
         private void LoadScreenSize()

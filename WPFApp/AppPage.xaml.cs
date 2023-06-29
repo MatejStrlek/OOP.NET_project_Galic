@@ -46,6 +46,7 @@ namespace WPFApp
         public AppPage()
         {
             InitializeComponent();
+            WriteLanguage();
         }
 
 
@@ -53,6 +54,43 @@ namespace WPFApp
         {
             LoadFirstTeamcb();
             AddFavoriteIfExists();
+        }
+
+        private void WriteLanguage()
+        {
+            if (File.Exists(LANGUAGE_AND_GENDER_PATH))
+            {
+                try
+                {
+                    string[] lines = repo.LoadLanguageAndGender(LANGUAGE_AND_GENDER_PATH);
+
+                    foreach (var line in lines)
+                    {
+                        string[] details = line.Split(SEPARATOR);
+
+                        if (details[0] == "English")
+                        {
+                            lblFirstTeam.Content = "First Team";
+                            lblSecondTeam.Content = "Second Team";
+                            btnSettings.Content = "Settings";
+                            btnFirstTeamDetails.Content = "First team details";
+                            btnSecondTeamDetails.Content = "Second team details";
+                        }
+                        else
+                        {
+                            lblFirstTeam.Content = "Prvi tim";
+                            lblSecondTeam.Content = "Drugi tim";
+                            btnSettings.Content = "Postavke";
+                            btnFirstTeamDetails.Content = "Detalji prvog tima";
+                            btnSecondTeamDetails.Content = "Detalji drugog tima";
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
         private void AddFavoriteIfExists()
@@ -265,7 +303,7 @@ namespace WPFApp
 
         private void btnSecondTeamDetails_Click(object sender, RoutedEventArgs e)
         {
-            if (cbFirstTeam.SelectedIndex == -1)
+            if (cbSecondTeam.SelectedIndex == -1)
             {
                 MessageBox.Show(
                     "Please select a team",
