@@ -532,5 +532,15 @@ namespace DAL.Repository
 
             return "0 : 0";
         }
+
+        public Player GetOneFemalePlayer()
+        {
+            return GetFemalePlayers()[0];
+        }
+
+        public Player GetOneMalePlayer()
+        {
+            return GetMalePlayers()[0];
+        }
     }
 }

@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPFApp.Controls;
 
 namespace WPFApp
 {
@@ -496,6 +497,46 @@ namespace WPFApp
             if (result == MessageBoxResult.No)
             {
                 e.Cancel = true;
+            }
+        }
+
+        private void btnPlayer1_Click(object sender, RoutedEventArgs e)
+        {
+            ShowPlayerControl();
+        }
+
+        private void btnPlayer2_Click(object sender, RoutedEventArgs e)
+        {
+            ShowPlayerControl();
+        }
+
+        private void ShowPlayerControl()
+        {
+            try
+            {
+                string[] lines = repo.LoadLanguageAndGender(LANGUAGE_AND_GENDER_PATH);
+
+                foreach (string line in lines)
+                {
+                    string[] details = line.Split(SEPARATOR);
+
+                    if (details[1] == "Female")
+                    {
+                        Player player = repo.GetOneFemalePlayer();
+                        PlayerControl playerControl = new PlayerControl(player);
+                        playerControl.Show();
+                    }
+                    else
+                    {
+                        Player player = repo.GetOneMalePlayer();
+                        PlayerControl playerControl = new PlayerControl(player);
+                        playerControl.Show();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

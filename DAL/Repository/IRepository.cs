@@ -24,5 +24,7 @@ namespace DAL.Repository
         List<Team> GetMaleEnemyTeams(Team team);
         string GetFemaleResult(Team firstTeam, Team secondTeam);
         string GetMaleResult(Team firstTeam, Team secondTeam);
+        Player GetOneFemalePlayer();
+        Player GetOneMalePlayer();
     }
 }
